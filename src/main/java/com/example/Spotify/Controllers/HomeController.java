@@ -68,7 +68,7 @@ public class HomeController {
 			user.setLastLogin(new Date());
 			userService.updateUser(user);
 			//***********extra************
-//			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin page
+			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin page
 //			if(user.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
 ////				model.addAttribute("currentUser", userService.findByEmail(email));
 //				model.addAttribute("users", userService.findAll());
