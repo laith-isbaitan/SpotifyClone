@@ -1,4 +1,4 @@
-package com.example.Models;
+package com.example.Spotify.Models;
 
 import java.util.List;
 
