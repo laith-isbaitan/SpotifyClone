@@ -9,4 +9,9 @@ public class HomeController {
 	public String index() {
 		return "index.jsp";
 	}
+	
+	@GetMapping("/dash")
+	public String dashboard() {
+		return "dashboard.jsp";
+	}
 }
