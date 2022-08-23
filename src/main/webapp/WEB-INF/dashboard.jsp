@@ -10,7 +10,7 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <style>
-     <%@ include file="./css/style.css"%>
+     <%@ include file="./css/dashboard.css"%>
 </style>
 </head>
 <body>
@@ -18,32 +18,45 @@
 	<h1>Hello, ____user___</h1>
 	<p>All the songs in out hub: </p>
 	<div class="container">
-		<div class="row">
-			<div class="card">
-				<h2>Better</h2>
-				<p>By: DJ Khalid</p>
-				<p>Added: 200</p>
-				<input class="addBtn" type="submit" value="ADD"/>
-			</div>
-			<div class="card">
-				<h2>Better</h2>
-				<p>By: DJ Khalid</p>
-				<p>Added: 200</p>
-				<input class="addBtn" type="submit" value="ADD"/>
-			</div>
-			<div class="card">
-				<h2>Better</h2>
-				<p>By: DJ Khalid</p>
-				<p>Added: 200</p>
-				<input class="addBtn" type="submit" value="ADD"/>
-			</div>
-			<div class="card">
-				<h2>Better</h2>
-				<p>By: DJ Khalid</p>
-				<p>Added: 200</p>
-				<input class="addBtn" type="submit" value="ADD"/>
-			</div>
-		</div>		
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<div class="card">
+							<h2>Better</h2>
+							<p>By: DJ Khalid</p>
+							<p>Added: 200</p>
+							<input class="addBtn" type="submit" value="ADD"/>
+						</div>
+					</td>
+					<td>
+						<div class="card">
+							<h2>Better</h2>
+							<p>By: DJ Khalid</p>
+							<p>Added: 200</p>
+							<input class="addBtn" type="submit" value="ADD"/>
+						</div>
+					</td>
+					<td>
+						<div class="card">
+							<h2>Better</h2>
+							<p>By: DJ Khalid</p>
+							<p>Added: 200</p>
+							<input class="addBtn" type="submit" value="ADD"/>
+						</div>
+					</td>
+					<td>
+						<div class="card">
+							<h2>Better</h2>
+							<p>By: DJ Khalid</p>
+							<p>Added: 200</p>
+							<input class="addBtn" type="submit" value="ADD"/>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+
 </body>
 </html>
