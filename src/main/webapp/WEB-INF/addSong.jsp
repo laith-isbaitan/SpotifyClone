@@ -8,14 +8,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/addSong.css">
+
 <title>Insert title here</title>
-<style>
-     <%@ include file="./css/addSong.css"%>
-</style>
+
 </head>
 <body>
 	<div class="formContainer">
-		<form:form name="addSongForm" method="post" modelAttribute="addSongForm">
+		<form:form action="/songs/new" method="post" modelAttribute="addSongForm">
 			<legend>Add a song:</legend>
 			<p>
 				<form:errors path="title"></form:errors>
