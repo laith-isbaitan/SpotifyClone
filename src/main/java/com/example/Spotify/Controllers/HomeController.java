@@ -39,7 +39,7 @@ public class HomeController {
 	@Autowired
     private UserValidator userValidator;
 	
-  @Autowired
+	@Autowired
 	SongService songService;
 
 	/////////login signup page//////////////
@@ -60,16 +60,13 @@ public class HomeController {
     
 	@RequestMapping(value = {"/", "/home"})
     public String home(Principal principal, Model model) {
-		System.out.println("hello");
         // 1
         String username = principal.getName();
         User user = userService.findByName(username);
         model.addAttribute("currUser", user);
-        System.out.println(user.getPassword());
 		if(user!=null) {
 			user.setLastLogin(new Date());
 			userService.updateUser(user);
-			System.out.println("hiiiiiiiii");
 			//***********extra************
 //			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin page
 //			if(user.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
