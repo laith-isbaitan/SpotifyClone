@@ -9,9 +9,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-     <%@ include file="./css/addSong.css"%>
-</style>
+<link rel="stylesheet" type="text/css" href="/css/addSong.css">
+
 </head>
 <body>
 	<div class="formContainer">
