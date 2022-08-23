@@ -12,6 +12,22 @@ public class HomeController {
 	public String index() {
 		return "index.jsp";
 	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "LoginSignupPage.jsp";
+	}
+
+	@GetMapping("/songs")
+	public String SongTable() {
+		return "SongPage.jsp";
+	}
+
+	@GetMapping("/users")
+	public String UserTable() {
+		return "UserPage.jsp";
+	}
+
 	
 	@GetMapping("/dash")
 	public String dashboard() {
