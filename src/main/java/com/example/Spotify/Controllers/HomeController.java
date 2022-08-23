@@ -14,4 +14,6 @@ public class HomeController {
 	public String dashboard() {
 		return "dashboard.jsp";
 	}
+	
+	
 }
