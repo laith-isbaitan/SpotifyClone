@@ -15,6 +15,9 @@
 	crossorigin="anonymous">
 <title>Dashboard</title>
 
+
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 </head>
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
@@ -47,7 +50,7 @@
 
 
 
-	<h1>Hello, ____user___</h1>
+	<h1>Hello, <c:out value="${currUser.getFirstName()}"></c:out></h1>
 	<p>All the songs in our hub:</p>
 	<div class="container">
 

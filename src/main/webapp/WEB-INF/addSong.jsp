@@ -12,6 +12,8 @@
 
 <title>Insert title here</title>
 
+<link rel="stylesheet" type="text/css" href="/css/addSong.css">
+
 </head>
 <body>
 	<div class="formContainer">
