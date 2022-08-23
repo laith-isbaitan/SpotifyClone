@@ -9,13 +9,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-     <%@ include file="./css/dashboard.css"%>
-</style>
+<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 </head>
 <body>
 
-	<h1>Hello, ____user___</h1>
+	<h1>Hello, <c:out value="${currUser.getFirstName()}"></c:out></h1>
 	<p>All the songs in out hub: </p>
 	<div class="container">
 		<table>
