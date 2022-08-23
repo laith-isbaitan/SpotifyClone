@@ -1,5 +1,7 @@
 package com.example.Spotify.Controllers;
 
+import java.util.List;
+
 import java.security.Principal;
 import java.util.Date;
 
@@ -11,6 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.Spotify.Models.Song;
+import com.example.Spotify.Services.SongService;
+
+
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +39,9 @@ public class HomeController {
 	@Autowired
     private UserValidator userValidator;
 	
+  @Autowired
+	SongService songService;
+
 	/////////login signup page//////////////
 
     @RequestMapping("/login")
@@ -97,14 +110,40 @@ public class HomeController {
 		return "UserPage.jsp";
 	}
 
-	
 	@GetMapping("/dash")
-	public String dashboard() {
+	public String dashboard(Model model) {
+		List<Song> songs = songService.allSongs();
+		model.addAttribute("songs", songs);
+
 		return "dashboard.jsp";
 	}
-	
+
 	@GetMapping("/addsong")
 	public String addSong(@ModelAttribute("addSongForm") Song song) {
 		return "addSong.jsp";
 	}
+
+	@GetMapping("/songs/new")
+	public String NewProduct(@ModelAttribute("addSongForm") Song song) {
+		return "addSong.jsp";
+
+	}
+
+	@PostMapping("/songs/new")
+	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
+		if (result.hasErrors()) {
+			return "addSong.jsp";
+		} else {
+			songService.createSong(song);
+			return "redirect:/dash";
+		}
+	}
+
+	@GetMapping("/songs/{id}")
+	public String songData(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("songs", songService.findSong(id));
+
+		return "SongPage.jsp";
+	}
+
 }

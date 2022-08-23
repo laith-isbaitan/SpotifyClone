@@ -15,8 +15,6 @@
 	<div class="AllContainer">
 		<div class="navBar">
 			<%@ include file="/WEB-INF/navbar.jsp"%>
-
-
 		</div>
 
 
@@ -37,8 +35,6 @@
 
 			</tbody>
 		</table>
-
-
 
 	</div>
 </body>

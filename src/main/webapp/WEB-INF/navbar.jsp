@@ -16,7 +16,7 @@
 
 		<nav class="navbar navbar-expand-xl navbar-light bg-light">
 			<div class="container-fluid">
-				<img src="images\spotifylogo3.png" alt="spotify Logo" width="50"
+				<img src="/images/spotifylogo3.png" alt="spotify Logo" width="50"
 					height="50">
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -26,9 +26,9 @@
 				</button>
 
 				<span class="navbar-text"> <a class="nav-link active"
-					aria-current="page" href="#">Playlist</a>
+					aria-current="page" href="/users">Playlist</a>
 				</span> <span class="navbar-text"> <a class="nav-link active"
-					aria-current="page" href="#">Dashboard</a>
+					aria-current="page" href="/dash">Dashboard</a>
 				</span> <span class="navbar-text"> <a class="nav-link active"
 					aria-current="page" href="#">logOut</a>
 				</span>
