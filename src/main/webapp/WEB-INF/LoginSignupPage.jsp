@@ -14,19 +14,19 @@
 	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 	crossorigin="anonymous">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/login.css">
 <style>
 	body{
 		color:white;
 	}
 </style>
 </head>
-<link rel="stylesheet" type="text/css" href="/css/login.css">
 
 <body>
 	<center>
 		<div class="AllContainer">
 			<center>
-				<img src="images\spotifylogo3.png" alt="spotify Logo" width="100"
+				<img src="../images/spotifylogo3.png" alt="spotify Logo" width="100"
 					height="100">
 			</center>
 		    

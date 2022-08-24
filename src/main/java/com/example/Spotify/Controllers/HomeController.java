@@ -37,26 +37,31 @@ public class HomeController {
 	private UserValidator userValidator;
 
 	@Autowired
-	SongService songService;
+	private SongService songService;
 
 	/////////login signup page//////////////
 
     @RequestMapping("/login")
     public String login(@RequestParam(value="error", required=false) String error,
     		@RequestParam(value="logout", required=false) String logout, Model model,
-    		@Valid @ModelAttribute("user") User user) {
+    		@Valid @ModelAttribute("user") User user,Principal principal) {
     	
-        if(error != null) {
-            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-        }
-        if(logout != null) {
-            model.addAttribute("logoutMessage", "Logout Successful!");
-        }
-        return "LoginSignupPage.jsp";
+    	if(principal != null) {
+    		return "redirect:/";
+    		
+    	}else {
+            if(error != null) {
+                model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+            }
+            if(logout != null) {
+                model.addAttribute("logoutMessage", "Logout Successful!");
+            }
+            return "LoginSignupPage.jsp";	
+    	}
     }
     
 	@RequestMapping(value = {"/", "/home"})
-    public String home(Principal principal, Model model) {
+    public String home(Model model) {
         // 1
 	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		

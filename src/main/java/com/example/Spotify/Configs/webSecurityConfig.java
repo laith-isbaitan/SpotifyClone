@@ -24,7 +24,7 @@ public class webSecurityConfig {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.
 			authorizeRequests()
-				.antMatchers("/css/**","/js/**","/registration").permitAll()
+				.antMatchers("/css/**","/js/**","/registration","/images/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
