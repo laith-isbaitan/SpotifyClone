@@ -28,7 +28,7 @@
 				<span class="navbar-text"> <a class="nav-link active"
 					aria-current="page" href="/users">Playlist</a>
 				</span> <span class="navbar-text"> <a class="nav-link active"
-					aria-current="page" href="/dash">Dashboard</a>
+					aria-current="page" href="/home">Dashboard</a>
 				</span> 
 				
 			    <form id="logoutForm" method="POST" action="/logout">
@@ -38,11 +38,8 @@
 						type="submit" value="Logout!" />					
 					</span>
     			</form>
-			
 			</div>
 		</nav>
-
 	</div>
-
 </body>
 </html>

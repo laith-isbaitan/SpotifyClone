@@ -7,6 +7,7 @@
 <html>
 <head>
 
+
 <meta charset="ISO-8859-1">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
@@ -19,7 +20,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 </head>
-<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
 <body>
 
@@ -39,7 +39,9 @@
 				<span class="navbar-text"> <a class="nav-link active"
 					aria-current="page" href="/users">Playlist</a>
 				</span> <span class="navbar-text"> <a class="nav-link active"
-					aria-current="page" href="/dash">Dashboard</a>
+
+					aria-current="page" href="/home">Dashboard</a>
+
 				</span>
 					<form id="logoutForm" method="POST" action="/logout">
 		       			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -47,7 +49,7 @@
 							<input class="nav-link active" aria-current="page" 
 							type="submit" value="Logout!" />					
 						</span>
-	    			</form>
+	    		</form>
 			</div>
 		</nav>
 
@@ -55,28 +57,39 @@
 
 
 
-	<h1>Hello, <c:out value="${currUser.getFirstName()}"></c:out></h1>
+	<h1>
+		Hello,
+		<c:out value="${currUser.getFirstName()}"></c:out>
+	</h1>
 	<p>All the songs in our hub:</p>
-	
-	<p><a href="/songs/new">Insert a new song</a></p>
-	
-	
-	<div class="container">
 
-		<c:forEach var="song" items="${songs}">
-			<center>
-				<div class="card2">
-					<h1>
-						<a href="/songs/${song.id}"><c:out value="${song.title}"></c:out></a>
-					</h1>
-					<h2>
-						<c:out value="${song.artist}"></c:out>
-					</h2>
-					<input class="addBtn" type="submit" value="ADD" />
-				</div>
-			</center>
-		</c:forEach>
-	</div>
+	<p>
+		<a href="/songs/new">Insert a new song</a>
+	</p>
+
+	<form:form action="/users" method="post"
+		modelAttribute="user">
+		<div class="container">
+
+			<c:forEach var="song" items="${songs}">
+				<center>
+					<div class="card2">
+						<h1>
+							<a href="/songs/${song.id}"><c:out value="${song.title}"></c:out></a>
+						</h1>
+						<h2>
+							<c:out value="${song.artist}"></c:out>
+						</h2>
+						<p id="count">0 Add(s)</p>
+						<input class="addBtn" type="submit" value="ADD" />
+					</div>
+				</center>
+			</c:forEach>
+		</div>
+	</form:form>
+
 
 </body>
+<script type="text/javascript" src="/js/increaseAdd.js"></script>
+
 </html>

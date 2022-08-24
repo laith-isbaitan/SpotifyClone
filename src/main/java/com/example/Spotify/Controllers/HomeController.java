@@ -29,13 +29,13 @@ import com.example.Spotify.Validators.UserValidator;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
-    private UserValidator userValidator;
-	
+	private UserValidator userValidator;
+
 	@Autowired
 	SongService songService;
 
@@ -69,54 +69,41 @@ public class HomeController {
 		if(user!=null) {
 			user.setLastLogin(new Date());
 			userService.updateUser(user);
-			//***********extra************
-			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin page
+			// ***********extra************
+			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
+			// page
 //			if(user.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
 ////				model.addAttribute("currentUser", userService.findByEmail(email));
 //				model.addAttribute("users", userService.findAll());
 //				return "adminPage.jsp";
 //			}
-			//***************************
-			
+			// ***************************
+
 			// All other users are redirected to the home page
 		}
 		List<Song> songs = songService.allSongs();
 		model.addAttribute("songs", songs);
 		return "dashboard.jsp";
-    }
-	
-	//////////////////regestration/////////////////
-	
+	}
+
+	////////////////// regestration/////////////////
+
 	@PostMapping("/registration")
-	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result,
-								Model model) {
-		
-        userValidator.validate(user, result);
-		if(result.hasErrors()) {
+	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+
+		userValidator.validate(user, result);
+		if (result.hasErrors()) {
 			return "LoginSignupPage.jsp";
 		}
 		userService.regesterUser(user);
 		return "redirect:/";
 	}
 	////////////////////////////////////
-	
+
 	@GetMapping("/songs")
 	public String SongTable() {
 		return "SongPage.jsp";
 	}
-
-	@GetMapping("/users")
-	public String UserTable() {
-		return "UserPage.jsp";
-	}
-
-//	@GetMapping("/dash")
-//	public String dashboard(Model model) {
-//		List<Song> songs = songService.allSongs();
-//		model.addAttribute("songs", songs);
-//
-//		return "dashboard.jsp";
-//	}
 
 	@GetMapping("/addsong")
 	public String addSong(@ModelAttribute("addSongForm") Song song) {
@@ -144,6 +131,22 @@ public class HomeController {
 		model.addAttribute("songs", songService.findSong(id));
 
 		return "SongPage.jsp";
+	}
+
+	@GetMapping("/users")
+	public String UserTable(Model model, Principal principal) {
+		String username = principal.getName();
+		User user1 = userService.findByName(username);
+		model.addAttribute("currUser", user1);
+		return "UserPage.jsp";
+	}
+
+	@PostMapping("/users")
+	public String users(@ModelAttribute("user") User user, Principal principal, Model model) {
+		String username = principal.getName();
+		User user1 = userService.findByName(username);
+		model.addAttribute("currUser", user1);
+		return "UserPage.jsp";
 	}
 
 }
