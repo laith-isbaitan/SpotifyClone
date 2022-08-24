@@ -65,20 +65,6 @@ public class HomeController {
     }
     
 
-	@RequestMapping("/login")
-	public String login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, Model model,
-			@Valid @ModelAttribute("user") User user) {
-
-		if (error != null) {
-			model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-		}
-		if (logout != null) {
-			model.addAttribute("logoutMessage", "Logout Successful!");
-		}
-		return "LoginSignupPage.jsp";
-	}
-
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
 		// 1
