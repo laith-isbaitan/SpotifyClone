@@ -1,11 +1,9 @@
 package com.example.Spotify.Services;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
+import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Repositries.PlaylistRepo;
 import com.example.Spotify.Repositries.SongRepo;
@@ -31,6 +29,13 @@ public class UserService {
     public User regesterUser(User user) {
     	
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+        Playlist userPlaylist = new Playlist();    
+        
+        user.setPlaylist(userPlaylist);
+        userPlaylist.setUser(user);
+
+        playlistRepo.save(userPlaylist);
         return userRepo.save(user);
     }
     

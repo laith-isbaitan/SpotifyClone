@@ -21,23 +21,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "playlists")
 public class Playlist {
 
-
-
    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-
-
-
    @JoinColumn(name = "user_id")
     private User user;
-
-
 
    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
@@ -45,8 +36,6 @@ public class Playlist {
    			joinColumns = @JoinColumn(name = "playlist_id"),
    			inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songs;
-
-
 
    public Long getId() {
         return id;
