@@ -11,4 +11,6 @@ import com.example.Spotify.Models.Song;
 public interface SongRepo extends CrudRepository<Song, Long> {
 
 	List<Song> findAll();
+
+	Song findByIdIs(Long id);
 }
