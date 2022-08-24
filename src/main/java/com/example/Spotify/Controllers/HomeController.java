@@ -4,11 +4,11 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.Spotify.Models.CustomUserDetail;
+import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Services.SongService;
@@ -37,29 +39,34 @@ public class HomeController {
 	@Autowired
 	SongService songService;
 
-	///////// login signup page//////////////
+	/////////login signup page//////////////
 
-	@RequestMapping("/login")
-	public String login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, Model model,
-			@Valid @ModelAttribute("user") User user) {
+    @RequestMapping("/login")
+    public String login(@RequestParam(value="error", required=false) String error,
+    		@RequestParam(value="logout", required=false) String logout, Model model,
+    		@Valid @ModelAttribute("user") User user) {
+    	
+        if(error != null) {
+            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+        }
+        if(logout != null) {
+            model.addAttribute("logoutMessage", "Logout Successful!");
+        }
+        return "LoginSignupPage.jsp";
+    }
+    
+	@RequestMapping(value = {"/", "/home"})
+    public String home(Principal principal, Model model) {
+        // 1
+	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+	     MediUser mediUser = (MediUser)auth.getPrincipal();
 
-		if (error != null) {
-			model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-		}
-		if (logout != null) {
-			model.addAttribute("logoutMessage", "Logout Successful!");
-		}
-		return "LoginSignupPage.jsp";
-	}
-
-	@RequestMapping(value = { "/", "/home" })
-	public String home(Principal principal, Model model) {
-		// 1
-		String username = principal.getName();
-		User user = userService.findByName(username);
-		model.addAttribute("currUser", user);
-		if (user != null) {
+        String email = mediUser.getEmail();
+        User user = userService.findByEmail(email);
+        
+        model.addAttribute("currUser", user);
+		if(user!=null) {
 			user.setLastLogin(new Date());
 			userService.updateUser(user);
 			// ***********extra************
@@ -125,27 +132,6 @@ public class HomeController {
 
 		return "SongPage.jsp";
 	}
-
-//	@RequestMapping("/dashboard/join/{id}")
-//	public String joinTeam(@PathVariable("id") Long id, HttpSession session, Model model) {
-//
-//		if (session.getAttribute("userId") == null) {
-//			return "redirect:/logout";
-//		}
-//		Long userId = (Long) session.getAttribute("userId");
-//
-//		Song song = songService.findById(id);
-//		User user = userService.findById(userId);
-//
-//		user.getSongs().add(song);
-//		userService.updateUser(user);
-//
-//		model.addAttribute("user", userService.findById(userId));
-//		model.addAttribute("unassignedProjects", songService.getUnassignedUsers(user));
-//		model.addAttribute("assignedProjects", songService.getAssignedUsers(user));
-//
-//		return "redirect:/dashboard";
-//	}
 
 	@GetMapping("/users")
 	public String UserTable(Model model, Principal principal) {

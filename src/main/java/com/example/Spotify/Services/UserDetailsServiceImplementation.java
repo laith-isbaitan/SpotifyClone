@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Repositries.UserRepo;
 
@@ -26,13 +27,18 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(username);
+        
+//        MediUser mediUser = null;
 
         if(user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         
-        return new org.springframework.security.core.userdetails.User(user.getFirstName(),
-        		user.getPassword(), getAuthorities(user));
+        return new MediUser(user.getFirstName(),
+        		user.getPassword(),true,true,true,true, getAuthorities(user), user.getEmail());
+        
+//        return new org.springframework.security.core.userdetails.User(user.getFirstName(),
+//        		user.getPassword(), getAuthorities(user));
     }
 	
     // 2

@@ -1,6 +1,7 @@
 package com.example.Spotify.Models;
 
 import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -88,6 +89,7 @@ public class User {
 		this.email = email;
 	}
 
+
 	public String getPassword() {
 		return password;
 	}
@@ -127,6 +129,5 @@ public class User {
 	public void setPlaylist(List<Playlist> playlist) {
 		this.playlist = playlist;
 	}
-
 
 }
