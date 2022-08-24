@@ -1,15 +1,15 @@
 package com.example.Spotify.Models;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -49,10 +49,9 @@ public class User {
 
 	private Date lastLogin;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
-
-	private Playlist playlist;
+	private List<Playlist> playlist;
 
 	public User() {
 	}
@@ -121,12 +120,13 @@ public class User {
 		this.lastLogin = lastLogin;
 	}
 
-	public Playlist getPlaylist() {
+	public List<Playlist> getPlaylist() {
 		return playlist;
 	}
 
-	public void setPlaylist(Playlist playlist) {
+	public void setPlaylist(List<Playlist> playlist) {
 		this.playlist = playlist;
 	}
+
 
 }
