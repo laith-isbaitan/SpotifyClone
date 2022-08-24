@@ -4,10 +4,11 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.Spotify.Models.CustomUserDetail;
+import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Services.SongService;
@@ -55,8 +58,13 @@ public class HomeController {
 	@RequestMapping(value = {"/", "/home"})
     public String home(Principal principal, Model model) {
         // 1
-        String username = principal.getName();
-        User user = userService.findByName(username);
+	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+	     MediUser mediUser = (MediUser)auth.getPrincipal();
+
+        String email = mediUser.getEmail();
+        User user = userService.findByEmail(email);
+        
         model.addAttribute("currUser", user);
 		if(user!=null) {
 			user.setLastLogin(new Date());
@@ -72,7 +80,8 @@ public class HomeController {
 			
 			// All other users are redirected to the home page
 		}
-		
+		List<Song> songs = songService.allSongs();
+		model.addAttribute("songs", songs);
 		return "dashboard.jsp";
     }
 	
@@ -101,13 +110,13 @@ public class HomeController {
 		return "UserPage.jsp";
 	}
 
-	@GetMapping("/dash")
-	public String dashboard(Model model) {
-		List<Song> songs = songService.allSongs();
-		model.addAttribute("songs", songs);
-
-		return "dashboard.jsp";
-	}
+//	@GetMapping("/dash")
+//	public String dashboard(Model model) {
+//		List<Song> songs = songService.allSongs();
+//		model.addAttribute("songs", songs);
+//
+//		return "dashboard.jsp";
+//	}
 
 	@GetMapping("/addsong")
 	public String addSong(@ModelAttribute("addSongForm") Song song) {
@@ -126,7 +135,7 @@ public class HomeController {
 			return "addSong.jsp";
 		} else {
 			songService.createSong(song);
-			return "redirect:/dash";
+			return "redirect:/";
 		}
 	}
 

@@ -1,7 +1,9 @@
 package com.example.Spotify.Models;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.management.relation.Role;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -89,6 +91,7 @@ public class User {
 		this.email = email;
 	}
 
+
 	public String getPassword() {
 		return password;
 	}
@@ -127,6 +130,16 @@ public class User {
 
 	public void setPlaylist(Playlist playlist) {
 		this.playlist = playlist;
+	}
+
+	public User getUser(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Set<Role> getRole() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
