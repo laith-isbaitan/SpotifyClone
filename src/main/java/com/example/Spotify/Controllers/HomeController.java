@@ -98,19 +98,6 @@ public class HomeController {
 		return "SongPage.jsp";
 	}
 
-//	@GetMapping("/users")
-//	public String UserTable() {
-//		return "UserPage.jsp";
-//	}
-
-//	@GetMapping("/dash")
-//	public String dashboard(Model model) {
-//		List<Song> songs = songService.allSongs();
-//		model.addAttribute("songs", songs);
-//
-//		return "dashboard.jsp";
-//	}
-
 	@GetMapping("/addsong")
 	public String addSong(@ModelAttribute("addSongForm") Song song) {
 		return "addSong.jsp";
