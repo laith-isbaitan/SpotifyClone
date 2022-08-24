@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.Spotify.Models.CustomUserDetail;
 import com.example.Spotify.Models.MediUser;
+import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
+import com.example.Spotify.Services.PlaylistService;
 import com.example.Spotify.Services.SongService;
 import com.example.Spotify.Services.UserService;
 import com.example.Spotify.Validators.UserValidator;
@@ -39,34 +40,37 @@ public class HomeController {
 	@Autowired
 	SongService songService;
 
-	/////////login signup page//////////////
+	@Autowired
+	private PlaylistService playlistService;
 
-    @RequestMapping("/login")
-    public String login(@RequestParam(value="error", required=false) String error,
-    		@RequestParam(value="logout", required=false) String logout, Model model,
-    		@Valid @ModelAttribute("user") User user) {
-    	
-        if(error != null) {
-            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-        }
-        if(logout != null) {
-            model.addAttribute("logoutMessage", "Logout Successful!");
-        }
-        return "LoginSignupPage.jsp";
-    }
-    
-	@RequestMapping(value = {"/", "/home"})
-    public String home(Principal principal, Model model) {
-        // 1
-	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-	     MediUser mediUser = (MediUser)auth.getPrincipal();
+	///////// login signup page//////////////
 
-        String email = mediUser.getEmail();
-        User user = userService.findByEmail(email);
-        
-        model.addAttribute("currUser", user);
-		if(user!=null) {
+	@RequestMapping("/login")
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout, Model model,
+			@Valid @ModelAttribute("user") User user) {
+
+		if (error != null) {
+			model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+		}
+		if (logout != null) {
+			model.addAttribute("logoutMessage", "Logout Successful!");
+		}
+		return "LoginSignupPage.jsp";
+	}
+
+	@RequestMapping(value = { "/", "/home" })
+	public String home(Principal principal, Model model) {
+		// 1
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+
+		String email = mediUser.getEmail();
+		User user = userService.findByEmail(email);
+
+		model.addAttribute("currUser", user);
+		if (user != null) {
 			user.setLastLogin(new Date());
 			userService.updateUser(user);
 			// ***********extra************
@@ -147,6 +151,29 @@ public class HomeController {
 		User user1 = userService.findByName(username);
 		model.addAttribute("currUser", user1);
 		return "UserPage.jsp";
+	}
+
+	@GetMapping("/playlists")
+	public String playlists(Model model) {
+
+		model.addAttribute("playlists", playlistService.allPlaylists());
+
+		return "Playlist.jsp";
+	}
+
+	@GetMapping("/playlists/new")
+	public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
+		return "addPlayList.jsp";
+	}
+
+	@PostMapping("/playlists/new")
+	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result) {
+		if (result.hasErrors()) {
+			return "addPlayList.jsp";
+		} else {
+			playlistService.addPlaylist(playlist);
+			return "redirect:/playlists";
+		}
 	}
 
 }

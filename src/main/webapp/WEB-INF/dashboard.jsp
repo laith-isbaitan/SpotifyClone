@@ -37,19 +37,18 @@
 				</button>
 
 				<span class="navbar-text"> <a class="nav-link active"
-					aria-current="page" href="/users">Playlist</a>
+					aria-current="page" href="/playlists">Playlist</a>
 				</span> <span class="navbar-text"> <a class="nav-link active"
-
 					aria-current="page" href="/home">Dashboard</a>
 
 				</span>
-					<form id="logoutForm" method="POST" action="/logout">
-		       			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<span class="navbar-text"> 
-							<input class="nav-link active" aria-current="page" 
-							type="submit" value="Logout!" />					
-						</span>
-	    		</form>
+				<form id="logoutForm" method="POST" action="/logout">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> <span class="navbar-text"> <input
+						class="nav-link active" aria-current="page" type="submit"
+						value="Logout!" />
+					</span>
+				</form>
 			</div>
 		</nav>
 
@@ -67,8 +66,7 @@
 		<a href="/songs/new">Insert a new song</a>
 	</p>
 
-	<form:form action="/users" method="post"
-		modelAttribute="user">
+	<form:form action="/users" method="post" modelAttribute="user">
 		<div class="container">
 
 			<c:forEach var="song" items="${songs}">
