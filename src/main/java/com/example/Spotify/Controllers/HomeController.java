@@ -64,12 +64,6 @@ public class HomeController {
     	}
     }
     
-	@RequestMapping(value = {"/", "/home"})
-    public String home(Model model) {
-        // 1
-	     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-	     MediUser mediUser = (MediUser)auth.getPrincipal();
 
 	@RequestMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
