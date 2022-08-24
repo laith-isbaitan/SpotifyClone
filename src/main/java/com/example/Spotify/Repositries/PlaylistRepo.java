@@ -1,9 +1,11 @@
 package com.example.Spotify.Repositries;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.example.Spotify.Models.Playlist;
 
+@Repository
 public interface PlaylistRepo extends CrudRepository<Playlist,Long>{
 
 }

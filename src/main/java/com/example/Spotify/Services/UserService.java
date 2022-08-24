@@ -1,7 +1,10 @@
 package com.example.Spotify.Services;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Repositries.PlaylistRepo;
@@ -25,9 +28,10 @@ public class UserService {
     
 	///////////regestering user//////////
 	
-    public void regesterUser(User user) {
+    public User regesterUser(User user) {
+    	
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
+        return userRepo.save(user);
     }
     
     /////////////login//////////////////

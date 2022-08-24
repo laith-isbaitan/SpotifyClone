@@ -14,6 +14,11 @@
 	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 	crossorigin="anonymous">
 <title>Insert title here</title>
+<style>
+	body{
+		color:white;
+	}
+</style>
 </head>
 <link rel="stylesheet" type="text/css" href="/css/login.css">
 
@@ -33,7 +38,7 @@
 		    		    
 				    <c:if test="${errorMessage != null}">
 				        <c:out value="${errorMessage}"></c:out>
-				    </c:if>
+				    </c:if><br>
 				    
 					<h1>To continue, log in to spotify</h1>
 					<div>
@@ -65,35 +70,35 @@
 					<h1>Sign up for free to start listening.</h1>
 	
 					<div>
-						<form:errors path="email"></form:errors>
+						<form:errors path="email"></form:errors><br>
 						<label class="text"> What's your email? </label><br> 
 						<form:input type="text" path="email" class="form-control"/>
 	
 					</div>
 	
 					<div>
-						<form:errors path="firstName"></form:errors>
+						<form:errors path="firstName"></form:errors><br>
 						<label class="text"> First Name </label><br> 
 						<form:input	type="text" path="firstName" class="form-control"/>
 	
 					</div>
 	
 					<div>
-						<form:errors path="lastName"></form:errors>
+						<form:errors path="lastName"></form:errors><br>
 						<label class="text"> Last Name </label><br> 
 						<form:input type="text"	path="lastName" class="form-control"/>
 	
 					</div>
 	
 					<div>
-						<form:errors path="password"></form:errors>
+						<form:errors path="password"></form:errors><br>
 						<label class="text">create password:</label><br> 
 						<form:input	type="password" path="password" class="form-control"/>
 	
 					</div>
 	
 					<div>
-						<form:errors path="confirm"></form:errors>
+						<form:errors path="confirm"></form:errors><br>
 						<label class="text">Confirm password:</label><br> 
 						<form:input	type="password" path="confirm" class="form-control"/>
 	
