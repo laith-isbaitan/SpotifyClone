@@ -68,7 +68,6 @@
 
 	<form:form action="/users" method="post" modelAttribute="user">
 		<div class="container">
-
 			<c:forEach var="song" items="${songs}">
 				<center>
 					<div class="card2">

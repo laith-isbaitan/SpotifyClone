@@ -108,22 +108,20 @@ public class HomeController {
 		userService.regesterUser(user);
 		return "redirect:/";
 	}
-	////////////////////////////////////
+	///////////////////song page//////////////////////
+	
+	@GetMapping("/songs/{id}")
+	public String songData(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("songs", songService.findSong(id));
 
-	@GetMapping("/songs")
-	public String SongTable() {
 		return "SongPage.jsp";
 	}
-
-	@GetMapping("/addsong")
-	public String addSong(@ModelAttribute("addSongForm") Song song) {
-		return "addSong.jsp";
-	}
+	
+	////////////////add song page/////////////////////
 
 	@GetMapping("/songs/new")
 	public String NewProduct(@ModelAttribute("addSongForm") Song song) {
 		return "addSong.jsp";
-
 	}
 
 	@PostMapping("/songs/new")
@@ -136,13 +134,8 @@ public class HomeController {
 		}
 	}
 
-	@GetMapping("/songs/{id}")
-	public String songData(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("songs", songService.findSong(id));
-
-		return "SongPage.jsp";
-	}
-
+	/////////////////////////////////////////
+	
 	@GetMapping("/users")
 	public String UserTable(Model model, Principal principal) {
 		String username = principal.getName();
@@ -158,7 +151,7 @@ public class HomeController {
 		model.addAttribute("currUser", user1);
 		return "UserPage.jsp";
 	}
-
+	////////////////view playlist////////////////
 	@GetMapping("/playlists")
 	public String playlists(Model model) {
 
@@ -166,7 +159,9 @@ public class HomeController {
 
 		return "Playlist.jsp";
 	}
-
+	
+	/////////////Add playlist////////////////
+	
 	@GetMapping("/playlists/new")
 	public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
 		return "addPlayList.jsp";
