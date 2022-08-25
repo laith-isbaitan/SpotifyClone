@@ -34,6 +34,7 @@ public class UserService {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepo.save(user);
 		Playlist userPlaylist = new Playlist();
+		userPlaylist.setName("first playlist");
 
 		user.getPlaylist().add(userPlaylist);
 		userPlaylist.setUser(user);
@@ -58,6 +59,15 @@ public class UserService {
 
 	public List<User> allUsers() {
 		return userRepo.findAll();
+	}
+
+	public Playlist addPlaylist(User user, Playlist playlist) {
+
+		user.getPlaylist().add(playlist);
+		playlist.setUser(user);
+
+		userRepo.save(user);
+		return playlistRepo.save(playlist);
 	}
 
 	public User findById(Long id) {

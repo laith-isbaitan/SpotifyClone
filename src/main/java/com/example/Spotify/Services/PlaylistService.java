@@ -20,16 +20,17 @@ public class PlaylistService {
 		return playlistRepo.findAll();
 	}
 
-	public Playlist addPlaylist(Playlist playlist) {
-		return playlistRepo.save(playlist);
-	}
-
-	public Playlist findDorm(Long id) {
+	public Playlist findPlaylist(Long id) {
 		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
 		if (optionalPlaylist.isPresent()) {
 			return optionalPlaylist.get();
 		} else {
 			return null;
 		}
+	}
+
+	public List<Playlist> findAllUsersPlaylists(Long userId) {
+		return playlistRepo.findAllByUser_id(userId);
+
 	}
 }

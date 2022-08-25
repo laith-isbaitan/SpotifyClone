@@ -26,8 +26,9 @@
 		<tbody>
 			<c:forEach var="playlist" items="${playlists}">
 				<tr>
-					<td><c:out value="${playlist.name}"></c:out></td>
-					<td><a href="/playlists/${playlist.id}">See songs</a></td>
+
+					<td><a href="/playlists/${playlist.id}"><c:out
+								value="${playlist.name}"></c:out></a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

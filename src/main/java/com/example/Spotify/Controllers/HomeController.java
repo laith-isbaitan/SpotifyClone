@@ -45,25 +45,24 @@ public class HomeController {
 
 	///////// login signup page//////////////
 
-    @RequestMapping("/login")
-    public String login(@RequestParam(value="error", required=false) String error,
-    		@RequestParam(value="logout", required=false) String logout, Model model,
-    		@Valid @ModelAttribute("user") User user,Principal principal) {
-    	
-    	if(principal != null) {
-    		return "redirect:/";
-    		
-    	}else {
-            if(error != null) {
-                model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-            }
-            if(logout != null) {
-                model.addAttribute("logoutMessage", "Logout Successful!");
-            }
-            return "LoginSignupPage.jsp";	
-    	}
-    }
-    
+	@RequestMapping("/login")
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout, Model model,
+			@Valid @ModelAttribute("user") User user, Principal principal) {
+
+		if (principal != null) {
+			return "redirect:/";
+
+		} else {
+			if (error != null) {
+				model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+			}
+			if (logout != null) {
+				model.addAttribute("logoutMessage", "Logout Successful!");
+			}
+			return "LoginSignupPage.jsp";
+		}
+	}
 
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
@@ -144,25 +143,41 @@ public class HomeController {
 	}
 
 	@GetMapping("/users")
-	public String UserTable(Model model, Principal principal) {
-		String username = principal.getName();
-		User user1 = userService.findByName(username);
-		model.addAttribute("currUser", user1);
+	public String UserTable(Model model) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+
+		String email = mediUser.getEmail();
+		User user = userService.findByEmail(email);
+
+		model.addAttribute("currUser", user);
 		return "UserPage.jsp";
 	}
 
 	@PostMapping("/users")
 	public String users(@ModelAttribute("user") User user, Principal principal, Model model) {
-		String username = principal.getName();
-		User user1 = userService.findByName(username);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+
+		String email = mediUser.getEmail();
+		User user1 = userService.findByEmail(email);
 		model.addAttribute("currUser", user1);
 		return "UserPage.jsp";
 	}
 
 	@GetMapping("/playlists")
 	public String playlists(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		model.addAttribute("playlists", playlistService.allPlaylists());
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+		String email = mediUser.getEmail();
+		User user = userService.findByEmail(email);
+		Long userId = user.getId();
+		System.out.println(userId);
+		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
 
 		return "Playlist.jsp";
 	}
@@ -173,11 +188,18 @@ public class HomeController {
 	}
 
 	@PostMapping("/playlists/new")
-	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result) {
+	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result,
+			Principal principal) {
 		if (result.hasErrors()) {
 			return "addPlayList.jsp";
 		} else {
-			playlistService.addPlaylist(playlist);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+			MediUser mediUser = (MediUser) auth.getPrincipal();
+			String email = mediUser.getEmail();
+			User user = userService.findByEmail(email);
+
+			userService.addPlaylist(user, playlist);
 			return "redirect:/playlists";
 		}
 	}

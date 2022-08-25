@@ -2,6 +2,7 @@ package com.example.Spotify.Repositries;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import com.example.Spotify.Models.Playlist;
@@ -14,5 +15,7 @@ public interface PlaylistRepo extends CrudRepository<Playlist, Long> {
 	Playlist findByIdIs(Long id);
 
 	List<Playlist> findAllBySongs(Playlist playlist);
+
+	List<Playlist> findAllByUser_id(Long id);
 
 }
