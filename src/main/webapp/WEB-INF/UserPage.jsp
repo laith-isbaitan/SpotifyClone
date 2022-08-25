@@ -28,7 +28,7 @@
 		<div class="body">
 			<h1>
 				<c:out value="${currUser.getFirstName()}"></c:out>
-				's <c:out value="${currPlaylist.getName()}"></c:out>
+				<c:out value="${currPlaylist.getName()}"></c:out>
 			</h1>
 			<br>
 
@@ -42,10 +42,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<!-- for each -->
-					</tr>
-
+					<c:forEach var="song" items="${currPlaylist.getSongs()}">
+						<tr>
+							<td>${song.getTitle() }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
