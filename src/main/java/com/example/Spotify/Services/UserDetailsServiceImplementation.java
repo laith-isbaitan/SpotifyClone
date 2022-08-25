@@ -22,23 +22,17 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
 	@Autowired
 	private UserRepo userRepo;
 	
-	
 	//1
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(username);
         
-//        MediUser mediUser = null;
-
         if(user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         
         return new MediUser(user.getFirstName(),
         		user.getPassword(),true,true,true,true, getAuthorities(user), user.getEmail());
-        
-//        return new org.springframework.security.core.userdetails.User(user.getFirstName(),
-//        		user.getPassword(), getAuthorities(user));
     }
 	
     // 2
