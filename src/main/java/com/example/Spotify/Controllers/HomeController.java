@@ -75,12 +75,8 @@ public class HomeController {
             @RequestParam(value = "logout", required = false) String logout, Model model,
             @Valid @ModelAttribute("user") User user, Principal principal) {
 
-
-
        if (principal != null) {
             return "redirect:/";
-
-
 
        } else {
             if (error != null) {
@@ -97,19 +93,11 @@ public class HomeController {
     @RequestMapping(value = { "/", "/home" })
     public String home(Principal principal, Model model) {
         // 1
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-
-
-       MediUser mediUser = (MediUser) auth.getPrincipal();
-
-
+       auth = SecurityContextHolder.getContext().getAuthentication();
+       mediUser = (MediUser) auth.getPrincipal();
 
        String email = mediUser.getEmail();
-        User user = userService.findByEmail(email);
-
-
-
+       CurrentUser = userService.findByEmail(email);
 
         model.addAttribute("currUser", CurrentUser);
         if (CurrentUser != null) {
@@ -126,8 +114,6 @@ public class HomeController {
             }
             // ***************************
 
-
-
            // All other users are redirected to the home page
         }
         List<Song> songs = songService.allSongs();
@@ -135,17 +121,10 @@ public class HomeController {
         return "dashboard.jsp";
     }
 
-
-
    ////////////////// regestration/////////////////
-
-
 
    @PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
-
-
-
        userValidator.validate(user, result);
         if (result.hasErrors()) {
             return "LoginSignupPage.jsp";
@@ -155,31 +134,20 @@ public class HomeController {
     }
     ////////////////////////////////////
 
-
-
    @GetMapping("/songs")
     public String SongTable() {
         return "SongPage.jsp";
     }
 
-
-
    @GetMapping("/addsong")
     public String addSong(@ModelAttribute("addSongForm") Song song) {
         return "addSong.jsp";
     }
-
-
-
+   
    @GetMapping("/songs/new")
     public String NewProduct(@ModelAttribute("addSongForm") Song song) {
         return "addSong.jsp";
-
-
-
    }
-
-
 
    @PostMapping("/songs/new")
     public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
@@ -191,13 +159,8 @@ public class HomeController {
         }
     }
 
-
-
    @GetMapping("/songs/{id}")
     public String songData(@PathVariable("id") Long id, Model model) {
-
-
-
        Song song = songService.findById(id);
         model.addAttribute("currSong", song);
         return "SongPage.jsp";
@@ -211,8 +174,6 @@ public class HomeController {
     //playlists of current user
     @GetMapping("/playlists")
     public String playlists(Model model) {
-
-
 
        Long userId = CurrentUser.getId();
         model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
@@ -241,10 +202,6 @@ public class HomeController {
     
     ////////////user playlist page ////////////
     
-
-
-
-
     @GetMapping("/playlist/{id}")
     public String playlistData(@PathVariable("id") Long id, Model model) {
 
