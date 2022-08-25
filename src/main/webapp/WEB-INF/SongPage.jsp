@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,11 @@
 		</div>
 
 
-		<h1>Others who added ...... - ........</h1>
+		<h1>
+			Others who added
+			<c:out value="${currSong.getTitle()}"></c:out>
+			- <c:out value="${currSong.getArtist()}"></c:out>
+		</h1>
 		<br>
 
 		<table class="table table-striped">
