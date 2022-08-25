@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.Spotify.Models.MediUser;
+import com.example.Spotify.Models.Role;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Repositries.UserRepo;
 
@@ -38,10 +39,10 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
     // 2
     private List<GrantedAuthority> getAuthorities(User user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//        for(Role role : user.getRoles()) {
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
+        for(Role role : user.getRoles()) {
+            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
             authorities.add(grantedAuthority);
-//        }
+        }
         return authorities;
     }
 }
