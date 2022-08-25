@@ -50,4 +50,11 @@ public class PlaylistService {
 		return playlistRepo.findBySongsNotContains(song);
 	}
 
+	public void deletePlaylist(Long id) {
+		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
+		if (optionalPlaylist.isPresent()) {
+			playlistRepo.deleteById(id);
+		}
+	}
+
 }

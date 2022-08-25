@@ -6,32 +6,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<title>Dorms</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+	crossorigin="anonymous">
+<title>Playlist</title>
 </head>
+<link rel="stylesheet" type="text/css" href="/css/playlist.css">
+
 <body>
 
-	<h2 class="center">Playlists</h2>
-	<p>
-		<a href="/playlists/new">Add a new playlist</a>
-	</p>
+	<%@ include file="/WEB-INF/navbar.jsp"%>
 
+	<center>
+		<div class="AddPlaylist">
 
-	<table>
-		<thead>
-			<tr>
-				<th>playlists</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="playlist" items="${playlists}">
-				<tr>
+			<h2 class="title1">Playlists</h2>
+			<p>
+				<a href="/playlists/new">Add a new playlist</a>
+		</div>
+	</center>
 
-					<td><a href="/playlist/${playlist.id}"><c:out
-								value="${playlist.name}"></c:out></a></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<div class="d-grid gap-3">
+
+		<p class="tabb">Playlists</p>
+		<c:forEach var="playlist" items="${playlists}">
+
+			<div class="p-2 bg-light border">
+				<a href="/playlist/${playlist.id}"><c:out
+						value="${playlist.name}"></c:out></a>&nbsp&nbsp&nbsp&nbsp<a
+					href="/playlist/${playlist.id}/delete">delete</a>
+			</div>
+
+		</c:forEach>
+
+	</div>
 </body>
 </html>
