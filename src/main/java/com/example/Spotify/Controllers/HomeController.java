@@ -43,9 +43,6 @@ public class HomeController {
 	@Autowired
 	private PlaylistService playlistService;
 
-	private Authentication auth = null;
-	private MediUser mediUser = null;
-	private User CurrentUser = null;
 	///////// login signup page//////////////
 
 	@RequestMapping("/login")
@@ -55,6 +52,7 @@ public class HomeController {
 
 		if (principal != null) {
 			return "redirect:/";
+
 		} else {
 			if (error != null) {
 				model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
@@ -69,17 +67,17 @@ public class HomeController {
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
 		// 1
-		auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		mediUser = (MediUser) auth.getPrincipal();
+		MediUser mediUser = (MediUser) auth.getPrincipal();
 
 		String email = mediUser.getEmail();
-		CurrentUser = userService.findByEmail(email);
+		User user = userService.findByEmail(email);
 
-		model.addAttribute("currUser", CurrentUser);
-		if (CurrentUser != null) {
-			CurrentUser.setLastLogin(new Date());
-			userService.updateUser(CurrentUser);
+		model.addAttribute("currUser", user);
+		if (user != null) {
+			user.setLastLogin(new Date());
+			userService.updateUser(user);
 			// ***********extra************
 			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
 			// page
@@ -109,20 +107,22 @@ public class HomeController {
 		userService.regesterUser(user);
 		return "redirect:/";
 	}
-	///////////////////song page//////////////////////
-	
-	@GetMapping("/songs/{id}")
-	public String songData(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("songs", songService.findSong(id));
+	////////////////////////////////////
 
+	@GetMapping("/songs")
+	public String SongTable() {
 		return "SongPage.jsp";
 	}
-	
-	////////////////add song page/////////////////////
+
+	@GetMapping("/addsong")
+	public String addSong(@ModelAttribute("addSongForm") Song song) {
+		return "addSong.jsp";
+	}
 
 	@GetMapping("/songs/new")
 	public String NewProduct(@ModelAttribute("addSongForm") Song song) {
 		return "addSong.jsp";
+
 	}
 
 	@PostMapping("/songs/new")
@@ -134,21 +134,57 @@ public class HomeController {
 			return "redirect:/";
 		}
 	}
-	
-	////////////////view playlist////////////////
-	
+
+	@GetMapping("/songs/{id}")
+	public String songData(@PathVariable("id") Long id, Model model) {
+
+		Song song = songService.findById(id);
+		model.addAttribute("currSong", song);
+//		model.addAttribute("songs", songService.findSong(id));
+
+		return "SongPage.jsp";
+	}
+
+//	@GetMapping("/users")
+//	public String UserTable(Model model) {
+//
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//		MediUser mediUser = (MediUser) auth.getPrincipal();
+//
+//		String email = mediUser.getEmail();
+//		User user = userService.findByEmail(email);
+//
+//		model.addAttribute("currUser", user);
+//		return "UserPage.jsp";
+//	}
+
+	@PostMapping("/users")
+	public String users(@ModelAttribute("user") User user, Principal principal, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+
+		String email = mediUser.getEmail();
+		User user1 = userService.findByEmail(email);
+		model.addAttribute("currUser", user1);
+		return "UserPage.jsp";
+	}
+
 	@GetMapping("/playlists")
 	public String playlists(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		Long userId = CurrentUser.getId();
-		System.out.println(userId);
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+		String email = mediUser.getEmail();
+		User user = userService.findByEmail(email);
+		Long userId = user.getId();
+
 		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
 
 		return "Playlist.jsp";
 	}
-	
-	/////////////Add playlist////////////////
-	
+
 	@GetMapping("/playlists/new")
 	public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
 		return "addPlayList.jsp";
@@ -160,25 +196,36 @@ public class HomeController {
 		if (result.hasErrors()) {
 			return "addPlayList.jsp";
 		} else {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-			userService.addPlaylist(CurrentUser, playlist);
+			MediUser mediUser = (MediUser) auth.getPrincipal();
+			String email = mediUser.getEmail();
+			User user = userService.findByEmail(email);
+
+			userService.addPlaylist(user, playlist);
 			return "redirect:/playlists";
 		}
 	}
-	
-	////////////user playlist page ////////////
-	
-	@GetMapping("/users")
-	public String UserTable(Model model) {
 
-		model.addAttribute("currUser", CurrentUser);
+	@GetMapping("/playlist/{id}")
+	public String playlistData(@PathVariable("id") Long id, Model model) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		MediUser mediUser = (MediUser) auth.getPrincipal();
+
+		String email = mediUser.getEmail();
+
+		User user = userService.findByEmail(email);
+		Long userId = user.getId();
+
+		model.addAttribute("currUser", user);
+
+		Playlist playlist = playlistService.findById(id);
+		model.addAttribute("currPlaylist", playlist);
+
+		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
+
 		return "UserPage.jsp";
 	}
 
-	@PostMapping("/users")
-	public String users(@ModelAttribute("user") User user, Principal principal, Model model) {
-
-		model.addAttribute("currUser", CurrentUser);
-		return "UserPage.jsp";
-	}
 }

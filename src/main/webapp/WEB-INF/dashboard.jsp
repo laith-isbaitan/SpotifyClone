@@ -77,6 +77,16 @@
 						<h2>
 							<c:out value="${song.artist}"></c:out>
 						</h2>
+
+						<div>
+							<select>
+								<c:forEach var="playlist" items="${playlists}">
+									<option><c:out value="${playlist.name}"></c:out></option>
+								</c:forEach>
+							</select>
+						</div>
+
+
 						<p id="count">0 Add(s)</p>
 						<input class="addBtn" type="submit" value="ADD" />
 					</div>

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.Spotify.Models.Playlist;
+import com.example.Spotify.Models.Song;
 import com.example.Spotify.Repositries.PlaylistRepo;
 
 @Service
@@ -20,6 +21,14 @@ public class PlaylistService {
 		return playlistRepo.findAll();
 	}
 
+	public Playlist findByName(String name) {
+		return playlistRepo.findByName(name);
+	}
+
+	public Playlist findById(long id) {
+		return playlistRepo.findByIdIs(id);
+	}
+
 	public Playlist findPlaylist(Long id) {
 		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
 		if (optionalPlaylist.isPresent()) {
@@ -31,6 +40,14 @@ public class PlaylistService {
 
 	public List<Playlist> findAllUsersPlaylists(Long userId) {
 		return playlistRepo.findAllByUser_id(userId);
-
 	}
+
+	public List<Playlist> getAssignedSongs(Song song) {
+		return playlistRepo.findAllBySongs(song);
+	}
+
+	public List<Playlist> getUnassignedSongs(Song song) {
+		return playlistRepo.findBySongsNotContains(song);
+	}
+
 }

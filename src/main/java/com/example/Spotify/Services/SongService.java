@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Repositries.SongRepo;
 
@@ -14,6 +15,7 @@ public class SongService {
 
 	public SongService(SongRepo songRepo) {
 		this.songRepo = songRepo;
+
 	}
 
 	public List<Song> allSongs() {
@@ -45,13 +47,25 @@ public class SongService {
 //		}
 //	}
 
-	public Song findById(Long id) {
-		Optional<Song> optionalSong = songRepo.findById(id);
-		if (optionalSong.isPresent()) {
-			return optionalSong.get();
-		} else {
-			return null;
-		}
+//	public Song findById(Long id) {
+//		Optional<Song> optionalSong = songRepo.findById(id);
+//		if (optionalSong.isPresent()) {
+//			return optionalSong.get();
+//		} else {
+//			return null;
+//		}
+//	}
+
+	public Song findById(long id) {
+		return songRepo.findByIdIs(id);
+	}
+
+	public List<Song> getAssignedPlaylists(Playlist playlist) {
+		return songRepo.findAllByPlaylists(playlist);
+	}
+
+	public List<Song> getUnassignedPlaylists(Playlist playlist) {
+		return songRepo.findByPlaylistsNotContains(playlist);
 	}
 
 }

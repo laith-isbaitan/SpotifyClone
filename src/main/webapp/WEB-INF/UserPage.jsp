@@ -28,7 +28,7 @@
 		<div class="body">
 			<h1>
 				<c:out value="${currUser.getFirstName()}"></c:out>
-				's PlayList
+				's <c:out value="${currPlaylist.getName()}"></c:out>
 			</h1>
 			<br>
 
