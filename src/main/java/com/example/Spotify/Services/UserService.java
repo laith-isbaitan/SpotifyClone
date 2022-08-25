@@ -72,9 +72,10 @@ public class UserService {
 
 	public Playlist addPlaylist(User user, Playlist playlist) {
 
+		System.out.println(user.getPlaylist());
+
 		user.getPlaylist().add(playlist);
 		playlist.setUser(user);
-		System.out.println(user.toString());
 		userRepo.save(user);
 		return playlistRepo.save(playlist);
 	}

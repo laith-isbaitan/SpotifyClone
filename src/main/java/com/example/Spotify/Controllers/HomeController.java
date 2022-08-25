@@ -158,12 +158,10 @@ public class HomeController {
 	}
 
 	@PostMapping("/playlists/new")
-	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result,
-			Principal principal) {
+	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result) {
 		if (result.hasErrors()) {
 			return "addPlayList.jsp";
 		} else {
-			System.out.println("hiiii");
 			userService.addPlaylist(CurrentUser, playlist);
 			return "redirect:/playlists";
 		}
