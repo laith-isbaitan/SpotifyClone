@@ -248,16 +248,9 @@ public class HomeController {
     @GetMapping("/playlist/{id}")
     public String playlistData(@PathVariable("id") Long id, Model model) {
 
-
-
-       model.addAttribute("currUser", CurrentUser);
-
-
-
-       Playlist playlist = playlistService.findById(id);
+    	model.addAttribute("currUser", CurrentUser);
+    	Playlist playlist = playlistService.findById(id);
         model.addAttribute("currPlaylist", playlist);
-  }
-
-
-
+		return "UserPage.jsp";
+    }
 }
