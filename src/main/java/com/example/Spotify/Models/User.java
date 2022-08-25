@@ -61,7 +61,7 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List <Role> roles = new ArrayList<Role>();
     
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Playlist> playlist = new ArrayList<Playlist>();
 	
