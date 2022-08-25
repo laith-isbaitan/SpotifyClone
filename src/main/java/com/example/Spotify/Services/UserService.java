@@ -72,8 +72,6 @@ public class UserService {
 
 	public Playlist addPlaylist(User user, Playlist playlist) {
 
-		System.out.println(user.getPlaylist());
-
 		user.getPlaylist().add(playlist);
 		playlist.setUser(user);
 		userRepo.save(user);

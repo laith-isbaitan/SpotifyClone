@@ -83,14 +83,15 @@ public class HomeController {
 		if (CurrentUser != null) {
 			CurrentUser.setLastLogin(new Date());
 			userService.updateUser(CurrentUser);
+			
 			// ***********extra************
-			// If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
-			// page
-//			if(user.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
-////				model.addAttribute("currentUser", userService.findByEmail(email));
+//			 If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
+//			 page
+			if(CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
+//				model.addAttribute("currentUser", userService.findByEmail(email));
 //				model.addAttribute("users", userService.findAll());
-//				return "adminPage.jsp";
-//			}
+				return "adminPage.jsp";
+			}
 			// ***************************
 
 			// All other users are redirected to the home page
@@ -169,15 +170,15 @@ public class HomeController {
 	
 	////////////user playlist page ////////////
 	
-	@GetMapping("/users")
+	@GetMapping("/user/playlist")
 	public String UserTable(Model model) {
 
 		model.addAttribute("currUser", CurrentUser);
 		return "UserPage.jsp";
 	}
 
-	@PostMapping("/users")
-	public String users(@ModelAttribute("user") User user, Principal principal, Model model) {
+	@PostMapping("/user/playlist")
+	public String users(Model model) {
 
 		model.addAttribute("currUser", CurrentUser);
 		return "UserPage.jsp";
