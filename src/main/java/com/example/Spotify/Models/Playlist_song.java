@@ -17,7 +17,7 @@ public class Playlist_song {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(updatable = false)
-	private int NumOfTimesAdded;
+	private int NumOfTimesAdded = 1;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
