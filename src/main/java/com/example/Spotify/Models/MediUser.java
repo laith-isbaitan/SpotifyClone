@@ -2,12 +2,14 @@ package com.example.Spotify.Models;
 
 import java.util.Collection;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+//we use this class to create a new principle obj but with addition to email property
 public class MediUser extends User {
 
-   private final String email;
+	private static final long serialVersionUID = 1L;
+	
+private final String email;
 
 
    public MediUser(String username, String password, boolean enabled,
@@ -20,6 +22,11 @@ public class MediUser extends User {
 	   this.email = email;
 
    }
+
+
+public static long getSerialversionuid() {
+	return serialVersionUID;
+}
 
 
 public String getEmail() {

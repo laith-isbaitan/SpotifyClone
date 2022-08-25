@@ -29,6 +29,8 @@ public class UserService {
 
 	/////////// regestering user//////////
 
+	//useing bcrypt to encript user password
+	//adding a new playlist for user
 	public User regesterUser(User user) {
 
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
