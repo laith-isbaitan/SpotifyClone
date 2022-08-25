@@ -1,7 +1,7 @@
 package com.example.Spotify.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -52,17 +52,19 @@ public class User {
 	}
 
 	private Date lastLogin;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Playlist> playlist;
-	
-    @ManyToMany(fetch = FetchType.EAGER)
+    
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_roles", 
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List <Role> roles;
+    
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Playlist> playlist = new ArrayList<Playlist>();
+	
+
 
 	public User() {
 	}

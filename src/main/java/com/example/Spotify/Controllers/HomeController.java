@@ -46,8 +46,10 @@ public class HomeController {
 	private Authentication auth = null;
 	private MediUser mediUser = null;
 	private User CurrentUser = null;
+	
 	///////// login signup page//////////////
-
+	// if user is logged in (principle != null) then route to dashboard ("/")
+	
 	@RequestMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model,
@@ -65,7 +67,8 @@ public class HomeController {
 			return "LoginSignupPage.jsp";
 		}
 	}
-
+	
+	//after logging in then set auth ,mediUser and CurrentUser
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
 		// 1
@@ -137,18 +140,18 @@ public class HomeController {
 	
 	////////////////view playlist////////////////
 	
+	//playlists of current user
 	@GetMapping("/playlists")
 	public String playlists(Model model) {
 
 		Long userId = CurrentUser.getId();
-		System.out.println(userId);
 		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
-
 		return "Playlist.jsp";
 	}
 	
 	/////////////Add playlist////////////////
 	
+	//create new playlist to current user
 	@GetMapping("/playlists/new")
 	public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
 		return "addPlayList.jsp";
@@ -160,7 +163,7 @@ public class HomeController {
 		if (result.hasErrors()) {
 			return "addPlayList.jsp";
 		} else {
-
+			System.out.println("hiiii");
 			userService.addPlaylist(CurrentUser, playlist);
 			return "redirect:/playlists";
 		}
