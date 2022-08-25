@@ -1,16 +1,10 @@
 package com.example.Spotify.Controllers;
 
-
-
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-
-
 import javax.validation.Valid;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
 import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.Song;
@@ -36,80 +28,69 @@ import com.example.Spotify.Services.SongService;
 import com.example.Spotify.Services.UserService;
 import com.example.Spotify.Validators.UserValidator;
 
-
-
 @Controller
 public class HomeController {
 
+	@Autowired
+	private UserService userService;
 
+	@Autowired
+	private UserValidator userValidator;
 
-   @Autowired
-    private UserService userService;
+	@Autowired
+	private SongService songService;
 
+	@Autowired
+	private PlaylistService playlistService;
 
+	private Authentication auth = null;
+	private MediUser mediUser = null;
+	private User CurrentUser = null;
 
-   @Autowired
-    private UserValidator userValidator;
+	///////// login signup page//////////////
+	// if user is logged in (principle != null) then route to dashboard ("/")
 
+	@RequestMapping("/login")
+	public String login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout, Model model,
+			@Valid @ModelAttribute("user") User user, Principal principal) {
 
+		if (principal != null) {
+			return "redirect:/";
 
-   @Autowired
-    private SongService songService;
+		} else {
+			if (error != null) {
+				model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+			}
+			if (logout != null) {
+				model.addAttribute("logoutMessage", "Logout Successful!");
+			}
+			return "LoginSignupPage.jsp";
+		}
+	}
 
+	// after logging in then set auth ,mediUser and CurrentUser
+	@RequestMapping(value = { "/", "/home" })
+	public String home(Principal principal, Model model) {
+		// 1
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		mediUser = (MediUser) auth.getPrincipal();
 
+		String email = mediUser.getEmail();
+		CurrentUser = userService.findByEmail(email);
 
-   @Autowired
-    private PlaylistService playlistService;
+		model.addAttribute("currUser", CurrentUser);
+		if (CurrentUser != null) {
+			CurrentUser.setLastLogin(new Date());
+			userService.updateUser(CurrentUser);
 
-
-
-   private Authentication auth = null;
-    private MediUser mediUser = null;
-    private User CurrentUser = null;
-    
-    ///////// login signup page//////////////
-    // if user is logged in (principle != null) then route to dashboard ("/")
-    
-    @RequestMapping("/login")
-    public String login(@RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout, Model model,
-            @Valid @ModelAttribute("user") User user, Principal principal) {
-
-       if (principal != null) {
-            return "redirect:/";
-
-       } else {
-            if (error != null) {
-                model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-            }
-            if (logout != null) {
-                model.addAttribute("logoutMessage", "Logout Successful!");
-            }
-            return "LoginSignupPage.jsp";
-        }
-    }
-    
-    //after logging in then set auth ,mediUser and CurrentUser
-    @RequestMapping(value = { "/", "/home" })
-    public String home(Principal principal, Model model) {
-        // 1
-       auth = SecurityContextHolder.getContext().getAuthentication();
-       mediUser = (MediUser) auth.getPrincipal();
-
-       String email = mediUser.getEmail();
-       CurrentUser = userService.findByEmail(email);
-
-        model.addAttribute("currUser", CurrentUser);
-        if (CurrentUser != null) {
-            CurrentUser.setLastLogin(new Date());
-            userService.updateUser(CurrentUser);
-            
-            // ***********extra************
+			// ***********extra************
 //             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
 //             page
-            if(CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
+			if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
 //                model.addAttribute("currentUser", userService.findByEmail(email));
 //                model.addAttribute("users", userService.findAll());
+
                 return "adminPage.jsp";
             }
             // ***************************
@@ -126,7 +107,6 @@ public class HomeController {
         
         return "dashboard.jsp";
     }
-
    ////////////////// regestration/////////////////
 
    @PostMapping("/registration")
@@ -190,7 +170,7 @@ public class HomeController {
         model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
         return "Playlist.jsp";
     }
-    
+
     /////////////Add playlist////////////////
     
     //create new playlist to current user
@@ -198,8 +178,6 @@ public class HomeController {
     public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
         return "addPlayList.jsp";
     }
-
-
 
    @PostMapping("/playlists/new")
     public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist
@@ -232,6 +210,13 @@ public class HomeController {
     	model.addAttribute("currUser", CurrentUser);
     	Playlist playlist = playlistService.findById(id);
         model.addAttribute("currPlaylist", playlist);
+
 		return "UserPage.jsp";
-    }
+	}
+
+	@RequestMapping("/playlist/{id}/delete")
+	public String delete(@PathVariable("id") Long id) {
+		playlistService.deletePlaylist(id);
+		return "redirect:/playlists";
+	}
 }

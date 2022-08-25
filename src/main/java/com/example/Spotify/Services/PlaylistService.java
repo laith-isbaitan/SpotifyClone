@@ -70,4 +70,11 @@ public class PlaylistService {
 		return foundList;
 	}
 
+	public void deletePlaylist(Long id) {
+		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
+		if (optionalPlaylist.isPresent()) {
+			playlistRepo.deleteById(id);
+		}
+	}
+
 }
