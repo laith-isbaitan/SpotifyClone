@@ -29,5 +29,5 @@ public interface PlaylistRepo extends CrudRepository<Playlist, Long> {
 	@Query(value="UPDATE playlist_song SET NumOfTimesAdded = NumOfTimesAdded +1 "+
 			"WHERE playlist_song.playlist_id = $1 AND "+
 			"playlist_song.song_id = $2;",nativeQuery=true)
-	Playlist_song findByPlaylistAndSong(Long playId, Long songid);
+	void findByPlaylistAndSong(Long playId, Long songid);
 }

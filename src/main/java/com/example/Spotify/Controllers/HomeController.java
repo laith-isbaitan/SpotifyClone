@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.Playlist;
+import com.example.Spotify.Models.Playlist_song;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Services.PlaylistService;
+import com.example.Spotify.Services.Playlist_songService;
 import com.example.Spotify.Services.SongService;
 import com.example.Spotify.Services.UserService;
 import com.example.Spotify.Validators.UserValidator;
@@ -42,6 +44,9 @@ public class HomeController {
 
 	@Autowired
 	private PlaylistService playlistService;
+	
+	@Autowired
+	private Playlist_songService play_songService;
 
 	private Authentication auth = null;
 	private MediUser mediUser = null;
@@ -73,39 +78,44 @@ public class HomeController {
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
 		// 1
-		auth = SecurityContextHolder.getContext().getAuthentication();
-		mediUser = (MediUser) auth.getPrincipal();
+		if (principal != null) {
+			auth = SecurityContextHolder.getContext().getAuthentication();
+			mediUser = (MediUser) auth.getPrincipal();
 
-		String email = mediUser.getEmail();
-		CurrentUser = userService.findByEmail(email);
+			String email = mediUser.getEmail();
+			CurrentUser = userService.findByEmail(email);
 
-		model.addAttribute("currUser", CurrentUser);
-		if (CurrentUser != null) {
-			CurrentUser.setLastLogin(new Date());
-			userService.updateUser(CurrentUser);
+			model.addAttribute("currUser", CurrentUser);
+			if (CurrentUser != null) {
+				CurrentUser.setLastLogin(new Date());
+				userService.updateUser(CurrentUser);
 
-			// ***********extra************
-//             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
-//             page
-			if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
-//                model.addAttribute("currentUser", userService.findByEmail(email));
-//                model.addAttribute("users", userService.findAll());
+				// ***********extra************
+//	             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
+//	             page
+				if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
+//	                model.addAttribute("currentUser", userService.findByEmail(email));
+//	                model.addAttribute("users", userService.findAll());
 
-                return "adminPage.jsp";
-            }
-            // ***************************
+	                return "adminPage.jsp";
+	            }
+	            // ***************************
 
-           // All other users are redirected to the home page
-        }
-        //to create song cards
-        List<Song> songs = songService.allSongs();
-        model.addAttribute("songs", songs);
-        
-        //to get playlist choices in song cards
-        List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
-        model.addAttribute("playlists",playlists);
-        
-        return "dashboard.jsp";
+	           // All other users are redirected to the home page
+	        }
+	        //to create song cards
+	        List<Song> songs = songService.allSongs();
+	        model.addAttribute("songs", songs);
+	        
+	        //to get playlist choices in song cards
+	        List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
+	        model.addAttribute("playlists",playlists);
+	        
+	        return "dashboard.jsp";
+		}else {
+			return "redirect:/login";
+		}
+
     }
    ////////////////// regestration/////////////////
 
@@ -118,18 +128,6 @@ public class HomeController {
         userService.regesterUser(user);
         return "redirect:/";
     }
-    //////////////////////////////
-
-//   @GetMapping("/songs")
-//    public String SongTable() {
-//        return "SongPage.jsp";
-//    }
-   
-//   
-//   @GetMapping("/addsong")
-//    public String addSong(@ModelAttribute("addSongForm") Song song) {
-//        return "addSong.jsp";
-//    }
    
    ///////////create new song//////////
 
@@ -157,9 +155,6 @@ public class HomeController {
         return "SongPage.jsp";
     }
 
-
-
-   
     ////////////////view playlist////////////////
     
     //playlists of current user
@@ -196,8 +191,7 @@ public class HomeController {
    @GetMapping("/playlist/addSong")
    public String addSongToPlaylist(@RequestParam("songId") Long songId 
 		   ,@RequestParam("playlistId") Long playlistId) {
-	   
-	   System.out.println("hiiiiiiii");
+
 	   playlistService.AddSongToPlaylist(playlistId,songId);
 	   return "redirect:/";
    }
@@ -208,8 +202,12 @@ public class HomeController {
     public String playlistData(@PathVariable("id") Long id, Model model) {
 
     	model.addAttribute("currUser", CurrentUser);
+    	
     	Playlist playlist = playlistService.findById(id);
         model.addAttribute("currPlaylist", playlist);
+
+        List<Playlist_song> play_song = play_songService.findSongsInPlaylist(id);
+        model.addAttribute("play_song",play_song);
 
 		return "UserPage.jsp";
 	}

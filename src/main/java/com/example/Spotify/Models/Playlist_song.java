@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Table(name = "playlist_song")
@@ -16,8 +19,9 @@ public class Playlist_song {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(updatable = false)
-	private int NumOfTimesAdded = 1;
+
+    @Column(columnDefinition = "integer default 1")
+	private Integer NumOfTimesAdded ;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
@@ -38,11 +42,11 @@ public class Playlist_song {
 		this.id = id;
 	}
 
-	public int getNumOfTimesAdded() {
+	public Integer getNumOfTimesAdded() {
 		return NumOfTimesAdded;
 	}
 
-	public void setNumOfTimesAdded(int numOfTimesAdded) {
+	public void setNumOfTimesAdded(Integer numOfTimesAdded) {
 		NumOfTimesAdded = numOfTimesAdded;
 	}
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.Spotify.Models.Playlist;
+import com.example.Spotify.Models.Playlist_song;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Repositries.PlaylistRepo;
 import com.example.Spotify.Repositries.SongRepo;
@@ -57,12 +58,14 @@ public class PlaylistService {
 	public Playlist AddSongToPlaylist(Long playlistId, Long songId) {
 		Playlist foundList = playlistRepo.findByIdIs(playlistId);
 		Song foundSong = songRepo.findByIdIs(songId);
-		
+
 		if(foundList.getSongs().contains(foundSong)) {
 			playlistRepo.findByPlaylistAndSong(playlistId, songId);
+
 		}else {
 			foundList.getSongs().add(foundSong);
 			foundSong.getPlaylists().add(foundList);
+
 			
 			songRepo.save(foundSong);
 			return playlistRepo.save(foundList);
