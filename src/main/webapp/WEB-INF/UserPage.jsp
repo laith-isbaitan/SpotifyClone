@@ -30,8 +30,7 @@
 				<c:out value="${currUser.getFirstName()}"></c:out>
 				<c:out value="${currPlaylist.getName()}"></c:out>
 			</h1>
-			<br>
-
+			<br> <a href="/playlist/${currPlaylist.id}/delete">Delete playlist</a>
 
 			<table class="table table-striped">
 				<thead>

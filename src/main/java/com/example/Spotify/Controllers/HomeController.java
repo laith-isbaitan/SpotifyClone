@@ -73,143 +73,143 @@ public class HomeController {
 	@RequestMapping(value = { "/", "/home" })
 	public String home(Principal principal, Model model) {
 		// 1
-		auth = SecurityContextHolder.getContext().getAuthentication();
-		mediUser = (MediUser) auth.getPrincipal();
+		if (principal != null) {
+			auth = SecurityContextHolder.getContext().getAuthentication();
+			mediUser = (MediUser) auth.getPrincipal();
 
-		String email = mediUser.getEmail();
-		CurrentUser = userService.findByEmail(email);
+			String email = mediUser.getEmail();
+			CurrentUser = userService.findByEmail(email);
 
-		model.addAttribute("currUser", CurrentUser);
-		if (CurrentUser != null) {
-			CurrentUser.setLastLogin(new Date());
-			userService.updateUser(CurrentUser);
+			model.addAttribute("currUser", CurrentUser);
+			if (CurrentUser != null) {
+				CurrentUser.setLastLogin(new Date());
+				userService.updateUser(CurrentUser);
 
-			// ***********extra************
-//             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
-//             page
-			if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
-//                model.addAttribute("currentUser", userService.findByEmail(email));
-//                model.addAttribute("users", userService.findAll());
+				// ***********extra************
+//			             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
+//			             page
+				if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
+//			                model.addAttribute("currentUser", userService.findByEmail(email));
+//			                model.addAttribute("users", userService.findAll());
 
-                return "adminPage.jsp";
-            }
-            // ***************************
+					return "adminPage.jsp";
+				}
+				// ***************************
 
-           // All other users are redirected to the home page
-        }
-        //to create song cards
-        List<Song> songs = songService.allSongs();
-        model.addAttribute("songs", songs);
-        
-        //to get playlist choices in song cards
-        List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
-        model.addAttribute("playlists",playlists);
-        
-        return "dashboard.jsp";
-    }
-   ////////////////// regestration/////////////////
+				// All other users are redirected to the home page
+			}
+			// to create song cards
+			List<Song> songs = songService.allSongs();
+			model.addAttribute("songs", songs);
 
-   @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
-       userValidator.validate(user, result);
-        if (result.hasErrors()) {
-            return "LoginSignupPage.jsp";
-        }
-        userService.regesterUser(user);
-        return "redirect:/";
-    }
-    //////////////////////////////
+			// to get playlist choices in song cards
+			List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
+			model.addAttribute("playlists", playlists);
+
+			return "dashboard.jsp";
+		} else {
+			return "redirect:/login";
+		}
+
+	}
+	////////////////// regestration/////////////////
+
+	@PostMapping("/registration")
+	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+		userValidator.validate(user, result);
+		if (result.hasErrors()) {
+			return "LoginSignupPage.jsp";
+		}
+		userService.regesterUser(user);
+		return "redirect:/";
+	}
+	//////////////////////////////
 
 //   @GetMapping("/songs")
 //    public String SongTable() {
 //        return "SongPage.jsp";
 //    }
-   
+
 //   
 //   @GetMapping("/addsong")
 //    public String addSong(@ModelAttribute("addSongForm") Song song) {
 //        return "addSong.jsp";
 //    }
-   
-   ///////////create new song//////////
 
-   @GetMapping("/songs/new")
-    public String NewProduct(@ModelAttribute("addSongForm") Song song) {
-        return "addSong.jsp";
-   }
+	/////////// create new song//////////
 
-   @PostMapping("/songs/new")
-    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
-        if (result.hasErrors()) {
-            return "addSong.jsp";
-        } else {
-            songService.createSong(song);
-            return "redirect:/";
-        }
-    }
-   
-   /////////////////song page/////////////////
-   
-   @GetMapping("/songs/{id}")
-    public String songData(@PathVariable("id") Long id, Model model) {
-       Song song = songService.findById(id);
-        model.addAttribute("currSong", song);
-        return "SongPage.jsp";
-    }
+	@GetMapping("/songs/new")
+	public String NewProduct(@ModelAttribute("addSongForm") Song song) {
+		return "addSong.jsp";
+	}
 
+	@PostMapping("/songs/new")
+	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
+		if (result.hasErrors()) {
+			return "addSong.jsp";
+		} else {
+			songService.createSong(song);
+			return "redirect:/";
+		}
+	}
 
+	///////////////// song page/////////////////
 
-   
-    ////////////////view playlist////////////////
-    
-    //playlists of current user
-    @GetMapping("/playlists")
-    public String playlists(Model model) {
+	@GetMapping("/songs/{id}")
+	public String songData(@PathVariable("id") Long id, Model model) {
+		Song song = songService.findById(id);
+		model.addAttribute("currSong", song);
+		return "SongPage.jsp";
+	}
 
-       Long userId = CurrentUser.getId();
-        model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
-        return "Playlist.jsp";
-    }
+	//////////////// view playlist////////////////
 
-    /////////////Add playlist////////////////
-    
-    //create new playlist to current user
-    @GetMapping("/playlists/new")
-    public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
-        return "addPlayList.jsp";
-    }
+	// playlists of current user
+	@GetMapping("/playlists")
+	public String playlists(Model model) {
 
-   @PostMapping("/playlists/new")
-    public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist
-    		, BindingResult result) {
-        
-	   if (result.hasErrors()) {
-            return "addPlayList.jsp";
-        } else {
-            userService.addPlaylist(CurrentUser, playlist);
-            return "redirect:/playlists";
-        }
-    }
-   
-   //////////////add song to playlist of current user/////////////////
-   
-   @GetMapping("/playlist/addSong")
-   public String addSongToPlaylist(@RequestParam("songId") Long songId 
-		   ,@RequestParam("playlistId") Long playlistId) {
-	   
-	   System.out.println("hiiiiiiii");
-	   playlistService.AddSongToPlaylist(playlistId,songId);
-	   return "redirect:/";
-   }
-    
-    ////////////user playlist page ////////////
-    
-    @GetMapping("/playlist/{id}")
-    public String playlistData(@PathVariable("id") Long id, Model model) {
+		Long userId = CurrentUser.getId();
+		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
+		return "Playlist.jsp";
+	}
 
-    	model.addAttribute("currUser", CurrentUser);
-    	Playlist playlist = playlistService.findById(id);
-        model.addAttribute("currPlaylist", playlist);
+	///////////// Add playlist////////////////
+
+	// create new playlist to current user
+	@GetMapping("/playlists/new")
+	public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
+		return "addPlayList.jsp";
+	}
+
+	@PostMapping("/playlists/new")
+	public String addPlaylist(@Valid @ModelAttribute("playlist") Playlist playlist, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "addPlayList.jsp";
+		} else {
+			userService.addPlaylist(CurrentUser, playlist);
+			return "redirect:/playlists";
+		}
+	}
+
+	////////////// add song to playlist of current user/////////////////
+
+	@GetMapping("/playlist/addSong")
+	public String addSongToPlaylist(@RequestParam("songId") Long songId, @RequestParam("playlistId") Long playlistId) {
+
+		System.out.println("hiiiiiiii");
+		playlistService.AddSongToPlaylist(playlistId, songId);
+		return "redirect:/";
+	}
+
+	//////////// user playlist page ////////////
+
+	@GetMapping("/playlist/{id}")
+	public String playlistData(@PathVariable("id") Long id, Model model) {
+
+		model.addAttribute("currUser", CurrentUser);
+		Playlist playlist = playlistService.findById(id);
+		model.addAttribute("currPlaylist", playlist);
 
 		return "UserPage.jsp";
 	}

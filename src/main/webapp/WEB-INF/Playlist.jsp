@@ -35,8 +35,7 @@
 
 			<div class="p-2 bg-light border">
 				<a href="/playlist/${playlist.id}"><c:out
-						value="${playlist.name}"></c:out></a>&nbsp&nbsp&nbsp&nbsp<a
-					href="/playlist/${playlist.id}/delete">delete</a>
+						value="${playlist.name}"></c:out></a>&nbsp&nbsp&nbsp&nbsp
 			</div>
 
 		</c:forEach>
