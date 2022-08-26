@@ -36,10 +36,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<!-- for each -->
-				</tr>
-
+				<c:forEach var="user" items="${users }">
+					<tr>
+						<td>${user[0] }</td>
+						<td>${user[1] }</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 

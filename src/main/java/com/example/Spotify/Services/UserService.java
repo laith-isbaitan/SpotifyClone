@@ -86,4 +86,8 @@ public class UserService {
 			return null;
 		}
 	}
+	
+	public List<Object[]> findAllUserForSong(Long songId){
+		return userRepo.findAllBySongs(songId);
+	}
 }

@@ -147,6 +147,10 @@ public class HomeController {
     public String songData(@PathVariable("id") Long id, Model model) {
        Song song = songService.findById(id);
         model.addAttribute("currSong", song);
+        
+        List<Object[]> users = userService.findAllUserForSong(song.getId());
+        model.addAttribute("users",users);
+        
         return "SongPage.jsp";
     }
 
