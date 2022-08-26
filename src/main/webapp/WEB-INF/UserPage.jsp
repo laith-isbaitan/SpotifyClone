@@ -42,11 +42,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="song" items="${currPlaylist.getSongs()}" varStatus="index">
+					<c:forEach var="song" items="${currPlaylist.getSongs()}" varStatus="status">
 						<tr>
 							<td>${song.getTitle() }</td>
 							<td>${song.getArtist() }</td>
-							<td>${play_song}</td>
+							<td>${play_song[status.index].getNumOfTimesAdded()}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
