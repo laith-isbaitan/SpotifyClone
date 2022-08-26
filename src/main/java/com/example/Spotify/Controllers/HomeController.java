@@ -60,10 +60,6 @@ public class HomeController {
 			@RequestParam(value = "logout", required = false) String logout, Model model,
 			@Valid @ModelAttribute("user") User user, Principal principal) {
 
-		if (principal != null) {
-			return "redirect:/";
-
-		} else {
 			if (error != null) {
 				model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
 			}
@@ -71,7 +67,6 @@ public class HomeController {
 				model.addAttribute("logoutMessage", "Logout Successful!");
 			}
 			return "LoginSignupPage.jsp";
-		}
 	}
 
 	// after logging in then set auth ,mediUser and CurrentUser
