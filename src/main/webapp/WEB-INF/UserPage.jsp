@@ -36,8 +36,8 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">Artist</th>
 						<th scope="col">Title</th>
+						<th scope="col">Artist</th>
 						<th scope="col">Times Added</th>
 					</tr>
 				</thead>
@@ -45,14 +45,13 @@
 					<c:forEach var="song" items="${currPlaylist.getSongs()}">
 						<tr>
 							<td>${song.getTitle() }</td>
+							<td>${song.getArtist() }</td>
+							<td>${song.getPlaylists()}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-
-
-
 	</div>
 </body>
 </html>
