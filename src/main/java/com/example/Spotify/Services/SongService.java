@@ -3,6 +3,7 @@ package com.example.Spotify.Services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Spotify.Models.Playlist;
@@ -11,12 +12,8 @@ import com.example.Spotify.Repositries.SongRepo;
 
 @Service
 public class SongService {
-	private final SongRepo songRepo;
-
-	public SongService(SongRepo songRepo) {
-		this.songRepo = songRepo;
-
-	}
+	@Autowired
+	private SongRepo songRepo;
 
 	public List<Song> allSongs() {
 		return songRepo.findAll();
@@ -68,4 +65,5 @@ public class SongService {
 		return songRepo.findByPlaylistsNotContains(playlist);
 	}
 
+	
 }

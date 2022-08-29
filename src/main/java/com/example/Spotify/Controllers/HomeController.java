@@ -48,7 +48,7 @@ public class HomeController {
 
 	@Autowired
 	private PlaylistService playlistService;
-	
+
 	@Autowired
 	private Playlist_songService play_songService;
 
@@ -129,38 +129,7 @@ public class HomeController {
 
    @PostMapping("/songs/new")
     public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song
-    		,@RequestParam("img") String img, BindingResult result) {
-       
-	   System.out.println(img); 
-       File newFolder = new File("C:\\Users\\li1\\Documents\\workspace-spring-tool-suite-4-4.15.1.RELEASE\\Spotify\\SpotifyClone\\src\\main\\webapp\\images\\Songs_images\\"+song.getTitle()+"-by-"+song.getArtist());
-       Boolean createFolder = newFolder.mkdirs();
-             
-       if(createFolder) {
-    	   BufferedImage image = null;
-    	    File f = null;
-    	    String path = img;
-    	    try {
-    	    	f = new File(path); 
-
-    	    	image = ImageIO.read(f);
-    	    	System.out.println("read complete");
-
-
-    	    }catch(IOException e){
-    	    	System.out.println("Error: "+ e);
-    	    }
-//    	    try {
-//    	    	f = new File(newFolder+"\\"+img);
-//    	    	ImageIO.write(image,"jpg", f);
-//    	    	System.out.println("write complete");
-//    	    	
-//    	    }catch(IOException e) {
-//    	    	System.out.println("Error: "+ e);
-//    	    }
-    	   
-       }else {
-    	   System.out.println("error with img folder");
-       }
+    		, BindingResult result) {
        
 	   if (result.hasErrors()) {
             return "addSong.jsp";

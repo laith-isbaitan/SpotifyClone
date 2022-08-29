@@ -39,18 +39,10 @@
 					</p>
 					
 					<!-- taking the path value and putting it in hidden input -->
-					<input type="hidden" value="" name="img" id="imgFile" />
-					<input type="file" id="file" name="file" accept="image/jpg" />
+					<form:input type="file" id="file" path="imageData" accept="image/jpg" />
 					
-					<input type="submit" value="Add Song" onclick="getPath()"/>
-					<script>
-						function getPath(){
-							var filePath = document.getElementById('file').value;
-							document.getElementById('imgFile').value = filePath;
-							document.getElementById('file').value = '';
-							alert(filepath);
-						}
-					</script>
+					<input type="submit" value="Add Song"/>
+					
 				</form:form>
 			</div>
 		</center>
