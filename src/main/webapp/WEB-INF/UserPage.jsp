@@ -27,7 +27,7 @@
 
 		<div class="body">
 			<h1>
-				<c:out value="${currUser.getFirstName()}"></c:out>
+				<c:out value="${User.getFirstName()}"></c:out>
 				<c:out value="${currPlaylist.getName()}"></c:out>
 			</h1>
 			<br>
@@ -44,7 +44,7 @@
 				<tbody>
 					<c:forEach var="song" items="${currPlaylist.getSongs()}" varStatus="status">
 						<tr>
-							<td>${song.getTitle() }</td>
+							<td><a href="/songs/${song.getId() }">${song.getTitle() }</a></td>
 							<td>${song.getArtist() }</td>
 							<td>${play_song[status.index].getNumOfTimesAdded()}</td>
 						</tr>
