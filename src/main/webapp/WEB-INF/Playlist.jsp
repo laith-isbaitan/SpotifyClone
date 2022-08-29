@@ -37,7 +37,7 @@
 				<a href="/playlist/${playlist.id}">
 				<c:out	value="${playlist.name}"></c:out>
 				</a>&nbsp&nbsp&nbsp&nbsp<a
-					href="/playlist/${playlist.id}/delete">delete</a>
+					href="/deletePlaylist/${playlist.id }">DELETE</a>
 			</div>
 
 		</c:forEach>
