@@ -2,6 +2,7 @@ package com.example.Spotify.Models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,9 @@ public class Song {
 
 	@Size(min = 3, max = 30)
 	private String artist;
+	
+	@Column
+	private String imageSource;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -56,6 +60,15 @@ public class Song {
 
 	public void setArtist(String artist) {
 		this.artist = artist;
+	}
+	
+
+	public String getImageSource() {
+		return imageSource;
+	}
+
+	public void setImageSource(String imageSource) {
+		this.imageSource = imageSource;
 	}
 
 	public List<Playlist> getPlaylists() {

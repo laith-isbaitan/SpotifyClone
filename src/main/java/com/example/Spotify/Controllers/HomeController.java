@@ -1,5 +1,6 @@
 package com.example.Spotify.Controllers;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -124,8 +125,23 @@ public class HomeController {
    }
 
    @PostMapping("/songs/new")
-    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
-        if (result.hasErrors()) {
+    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song,@RequestParam("img") String img, BindingResult result) {
+       
+	   System.out.println(img); 
+       File newFolder = new File("/images/Songs_images/"+song.getTitle()+"-by-"+song.getArtist());
+       File f = new File("/images/Songs_images");
+       Boolean createFolder = newFolder.mkdirs();
+       System.out.println(newFolder);
+       
+       System.out.println(f.canWrite());
+       if(createFolder) {
+    	   File imageFile = new File(newFolder+"/"+img);
+    	   System.out.println("hiiiiiiiiiii");
+       }else {
+    	   System.out.println("error with img file");
+       }
+       
+	   if (result.hasErrors()) {
             return "addSong.jsp";
         } else {
             songService.createSong(song);
