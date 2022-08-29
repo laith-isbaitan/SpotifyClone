@@ -90,4 +90,8 @@ public class UserService {
 	public List<Object[]> findAllUserForSong(Long songId){
 		return userRepo.findAllBySongs(songId);
 	}
+	
+	public User findByPlaylistId(Long playId) {
+		return userRepo.findByPlaylistIdIs(playId);
+	}
 }

@@ -164,6 +164,13 @@ public class HomeController {
         model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
         return "Playlist.jsp";
     }
+    
+    //playlists of user based on id
+    @GetMapping("/playlists/{id}")
+    public String PlaylistsOfUserId(@PathVariable("id") Long id, Model model) {
+    	model.addAttribute("playlists", playlistService.findAllUsersPlaylists(id));
+    	return "Playlist.jsp";
+    }
 
     /////////////Add playlist////////////////
     
@@ -197,15 +204,19 @@ public class HomeController {
     
     ////////////user playlist page ////////////
     
-    @GetMapping("/playlist/{id}")
-    public String playlistData(@PathVariable("id") Long id, Model model) {
-
-    	model.addAttribute("currUser", CurrentUser);
+    @GetMapping("/playlist/{playId}")
+    public String playlistData(@PathVariable("playId") Long playId, Model model) {
     	
-    	Playlist playlist = playlistService.findById(id);
+    	Playlist playlist = playlistService.findById(playId);
         model.addAttribute("currPlaylist", playlist);
 
-        List<Playlist_song> play_song = play_songService.findSongsInPlaylist(id);
+    	if(CurrentUser.getPlaylist().contains(playlist)) {
+        	model.addAttribute("User", CurrentUser);
+    	}else {
+    		model.addAttribute("User", userService.findByPlaylistId(playId));
+    	}
+        
+        List<Playlist_song> play_song = play_songService.findSongsInPlaylist(playId);
         model.addAttribute("play_song",play_song);
 
 		return "UserPage.jsp";

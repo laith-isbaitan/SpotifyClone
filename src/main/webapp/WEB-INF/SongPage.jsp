@@ -38,8 +38,9 @@
 			<tbody>
 				<c:forEach var="user" items="${users }">
 					<tr>
-						<td>${user[0] }</td>
-						<td>${user[1] }</td>
+					<!-- user[0] is the users id -->
+						<td><a href="/playlists/${user[0] }">${user[1] }</a></td>
+						<td>${user[2] }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

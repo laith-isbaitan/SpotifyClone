@@ -34,8 +34,9 @@
 		<c:forEach var="playlist" items="${playlists}">
 
 			<div class="p-2 bg-light border">
-				<a href="/playlist/${playlist.id}"><c:out
-						value="${playlist.name}"></c:out></a>&nbsp&nbsp&nbsp&nbsp<a
+				<a href="/playlist/${playlist.id}">
+				<c:out	value="${playlist.name}"></c:out>
+				</a>&nbsp&nbsp&nbsp&nbsp<a
 					href="/playlist/${playlist.id}/delete">delete</a>
 			</div>
 
