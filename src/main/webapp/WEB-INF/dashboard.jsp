@@ -68,31 +68,41 @@
 
 		<div class="container">
 			<c:forEach var="song" items="${songs}">
-				<form action="/playlist/addSong" method="get" >
 			
 					<center>
 						<div class="card2">
-							<h1>
-								<a href="/songs/${song.id}"><c:out value="${song.title}"></c:out></a>
-							</h1>
-							<h2>
-								<c:out value="${song.artist}"></c:out>
-							</h2>
-	
-							<div>
-								<select name="playlistId">
-									<c:forEach var="play" items="${playlists}">
-										<option value="${play.id}" >${play.name}</option>
-									</c:forEach>
-								</select>
-							</div>
-	
-							<p id="count">0 Add(s)</p>
-							<input type="hidden" name="songId" value="${song.id }" />
-							<input class="addBtn" type="submit" value="ADD" />
+							<!-- adding song to playlist -->
+							<form action="/playlist/addSong" method="get" >
+							
+								<h1>
+									<a href="/songs/${song.id}"><c:out value="${song.title}"></c:out></a>
+								</h1>
+								<h2>
+									<c:out value="${song.artist}"></c:out>
+								</h2>
+		
+								<div>
+									<select name="playlistId">
+										<c:forEach var="play" items="${playlists}">
+											<option value="${play.id}" >${play.name}</option>
+										</c:forEach>
+									</select>
+								</div>
+		
+								<p id="count">0 Add(s)</p>
+								<input type="hidden" name="songId" value="${song.id }" />
+								<input class="addBtn" type="submit" value="ADD" />
+							</form>
+							
+							<!-- deleting song -->
+							<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
+								<form action="" method="post">
+									<input class="delete button" type="submit" value="DELETE"/>
+								</form>
+							</c:if>
+
 						</div>
 					</center>
-				</form>
 				
 			</c:forEach>
 		</div>
