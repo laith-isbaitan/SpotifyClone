@@ -37,7 +37,12 @@
 						<form:label path="artist">Artist Name: </form:label>
 						<form:input type="text" path="artist" />
 					</p>
-					<input type="submit" value="Add Song" />
+					
+					<!-- taking the path value and putting it in hidden input -->
+					<form:input type="file" id="file" path="imageData" accept="image/jpg" />
+					
+					<input type="submit" value="Add Song"/>
+					
 				</form:form>
 			</div>
 		</center>

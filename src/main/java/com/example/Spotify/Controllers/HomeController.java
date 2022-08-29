@@ -1,9 +1,13 @@
 package com.example.Spotify.Controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +48,7 @@ public class HomeController {
 
 	@Autowired
 	private PlaylistService playlistService;
-	
+
 	@Autowired
 	private Playlist_songService play_songService;
 
@@ -124,8 +128,10 @@ public class HomeController {
    }
 
    @PostMapping("/songs/new")
-    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
-        if (result.hasErrors()) {
+    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song
+    		, BindingResult result) {
+       
+	   if (result.hasErrors()) {
             return "addSong.jsp";
         } else {
             songService.createSong(song);

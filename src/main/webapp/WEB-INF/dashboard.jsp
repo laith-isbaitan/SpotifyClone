@@ -68,7 +68,7 @@
 
 		<div class="container">
 			<c:forEach var="song" items="${songs}">
-			
+					<img alt="" src="${song.getImageData() }" />
 					<center>
 						<div class="card2">
 							<!-- adding song to playlist -->
