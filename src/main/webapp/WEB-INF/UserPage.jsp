@@ -30,25 +30,28 @@
 				<c:out value="${currUser.getFirstName()}"></c:out>
 				<c:out value="${currPlaylist.getName()}"></c:out>
 			</h1>
-			<br>
+			<br> <a href="/playlist/${currPlaylist.id}/delete">delete Playlist</a>
 
 
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">Title</th>
-						<th scope="col">Artist</th>
-						<th scope="col">Times Added</th>
+						<th class="text-center scope="col">Title</th>
+						<th class="text-center scope="col">Artist</th>
+						<th class="text-center scope="col">Times Added</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="song" items="${currPlaylist.getSongs()}" varStatus="status">
-						<tr>
-							<td>${song.getTitle() }</td>
-							<td>${song.getArtist() }</td>
-							<td>${play_song[status.index].getNumOfTimesAdded()}</td>
-						</tr>
+					<c:forEach var="row" items="${objects}">
+
+				<tr>
+					<c:forEach var="items" items="${row}">
+
+						<td class="text-center"><c:out value="${items}"></c:out></td>
 					</c:forEach>
+
+				</tr>
+			</c:forEach>
 				</tbody>
 			</table>
 		</div>

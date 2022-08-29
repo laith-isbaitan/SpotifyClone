@@ -20,7 +20,7 @@ public class Playlist_song {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    @Column(columnDefinition = "integer default 1")
+//    @Column(columnDefinition = "integer default 0")
 	private Integer NumOfTimesAdded ;
 
 	@ManyToOne(fetch = FetchType.LAZY)

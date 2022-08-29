@@ -17,12 +17,12 @@ import com.example.Spotify.Repositries.SongRepo;
 public class PlaylistService {
 	@Autowired
 	private Play_SongRepo play_songRepo;
-	
+
 	private final PlaylistRepo playlistRepo;
-	
+
 	private final SongRepo songRepo;
 
-	public PlaylistService(PlaylistRepo playlistRepo,SongRepo songRepo) {
+	public PlaylistService(PlaylistRepo playlistRepo, SongRepo songRepo) {
 		this.playlistRepo = playlistRepo;
 		this.songRepo = songRepo;
 	}
@@ -59,30 +59,31 @@ public class PlaylistService {
 	public List<Playlist> getUnassignedSongs(Song song) {
 		return playlistRepo.findBySongsNotContains(song);
 	}
-	
+
 	public Playlist AddSongToPlaylist(Long playlistId, Long songId) {
 		Playlist foundList = playlistRepo.findByIdIs(playlistId);
 		Song foundSong = songRepo.findByIdIs(songId);
 
-		if(foundList.getSongs().contains(foundSong)) {
-			System.out.println("exists");
+		if (foundList.getSongs().contains(foundSong)) {
 			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(playlistId, songId);
-			System.out.println(playlist_song.getNumOfTimesAdded());
-			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded()+1);
-			System.out.println(playlist_song.getNumOfTimesAdded());
-			play_songRepo.save(playlist_song);
-//			play_songRepo.findAllBySong_id(songId);
-
-//			playlistRepo.findByPlaylistAndSong(playlistId, songId);
-
-		}else {
-			foundList.getSongs().add(foundSong);
-//			foundSong.getPlaylists().add(foundList);
-
 			
-			songRepo.save(foundSong);
-			return playlistRepo.save(foundList);
+			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded() + 1);
+			
+			play_songRepo.save(playlist_song);
+
+
+		} else {
+			foundList.getSongs().add(foundSong);
+
+			playlistRepo.save(foundList);
+			Long p = (long) 3;
+			Long s = (long) 2;
+			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(p,s);
+			System.out.println(playlist_song.getNumOfTimesAdded());
+			playlistRepo.save(foundList);
+
 		}
+
 		return foundList;
 	}
 
@@ -92,5 +93,7 @@ public class PlaylistService {
 			playlistRepo.deleteById(id);
 		}
 	}
+
+	
 
 }
