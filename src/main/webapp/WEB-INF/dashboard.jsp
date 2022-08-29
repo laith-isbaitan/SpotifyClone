@@ -96,7 +96,7 @@
 							
 							<!-- deleting song -->
 							<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
-								<form action="" method="post">
+								<form action="/deleteSong/${song.id }">
 									<input class="delete button" type="submit" value="DELETE"/>
 								</form>
 							</c:if>

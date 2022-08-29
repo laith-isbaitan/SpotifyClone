@@ -138,7 +138,14 @@ public class HomeController {
             return "redirect:/";
         }
     }
-   
+   ///////////Admin delete song//////////////
+   @RequestMapping("/deleteSong/{id}")
+   public String DeleteSong(@PathVariable("id") Long songId) {
+	   if(CurrentUser.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
+		   songService.deleteSong(songId);
+	   }
+	   return "redirect:/";
+   }
    /////////////////song page/////////////////
    
    @GetMapping("/songs/{id}")

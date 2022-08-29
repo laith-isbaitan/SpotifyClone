@@ -61,7 +61,6 @@ public class Song {
 	public void setArtist(String artist) {
 		this.artist = artist;
 	}
-	
 
 	public byte[] getImageData() {
 		return imageData;

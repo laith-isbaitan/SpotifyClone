@@ -33,16 +33,12 @@ public class SongService {
 		}
 	}
 
-//	public Song updateSong(Song song) {
-//		return songRepo.save(song);
-//	}
-//
-//	public void deleteSong(Long id) {
-//		Optional<Song> optionalSong = songRepo.findById(id);
-//		if (optionalSong.isPresent()) {
-//			songRepo.deleteById(id);
-//		}
-//	}
+	public void deleteSong(Long id) {
+		Optional<Song> optionalSong = songRepo.findById(id);
+		if (optionalSong.isPresent()) {
+			songRepo.deleteById(id);
+		}
+	}
 
 //	public Song findById(Long id) {
 //		Optional<Song> optionalSong = songRepo.findById(id);
