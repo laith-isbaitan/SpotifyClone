@@ -37,9 +37,20 @@
 						<form:label path="artist">Artist Name: </form:label>
 						<form:input type="text" path="artist" />
 					</p>
-					<input type="file" id="img" name="img" accept="image/*">
 					
-					<input type="submit" value="Add Song" />
+					<!-- taking the path value and putting it in hidden input -->
+					<input type="hidden" value="" name="img" id="imgFile" />
+					<input type="file" id="file" name="file" accept="image/jpg" />
+					
+					<input type="submit" value="Add Song" onclick="getPath()"/>
+					<script>
+						function getPath(){
+							var filePath = document.getElementById('file').value;
+							document.getElementById('imgFile').value = filePath;
+							document.getElementById('file').value = '';
+							alert(filepath);
+						}
+					</script>
 				</form:form>
 			</div>
 		</center>
