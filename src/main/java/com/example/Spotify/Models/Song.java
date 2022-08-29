@@ -35,7 +35,9 @@ public class Song {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
-	@JoinTable(name = "playlist_song", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+	@JoinTable(name = "playlist_song"
+	, joinColumns = @JoinColumn(name = "song_id")
+	, inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists;
 
 	public Long getId() {
