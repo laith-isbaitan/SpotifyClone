@@ -84,20 +84,8 @@ public class HomeController {
 			if (CurrentUser != null) {
 				CurrentUser.setLastLogin(new Date());
 				userService.updateUser(CurrentUser);
-
-				// ***********extra************
-//	             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
-//	             page
-				if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
-//	                model.addAttribute("currentUser", userService.findByEmail(email));
-//	                model.addAttribute("users", userService.findAll());
-
-	                return "adminPage.jsp";
-	            }
-	            // ***************************
-
-	           // All other users are redirected to the home page
 	        }
+			
 	        //to create song cards
 	        List<Song> songs = songService.allSongs();
 	        model.addAttribute("songs", songs);
@@ -120,7 +108,11 @@ public class HomeController {
         if (result.hasErrors()) {
             return "LoginSignupPage.jsp";
         }
-        userService.regesterUser(user);
+		if(userService.allUsers().size() > 0) {
+			userService.regesterUser(user);
+		}else {
+			userService.regesterAdmin(user);
+		}
         return "redirect:/";
     }
    

@@ -51,7 +51,22 @@ public class UserService {
 		playlistRepo.save(userPlaylist);
 		return userRepo.save(user);
 	}
+	public User regesterAdmin(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(roleRepo.findByName("ROLE_ADMIN"));
+		userRepo.save(user);
+		
+		Playlist userPlaylist = new Playlist();
+		userPlaylist.setName("first playlist");
+		playlistRepo.save(userPlaylist);
+		
+		userPlaylist.setUser(user);
 
+		user.getPlaylist().add(userPlaylist);
+
+		playlistRepo.save(userPlaylist);
+		return userRepo.save(user);
+	}
 	///////////// login//////////////////
 
 	public User findByEmail(String email) {
