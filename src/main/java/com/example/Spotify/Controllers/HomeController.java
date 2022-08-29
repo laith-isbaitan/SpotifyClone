@@ -176,7 +176,15 @@ public class HomeController {
     	model.addAttribute("playlists", playlistService.findAllUsersPlaylists(id));
     	return "Playlist.jsp";
     }
-
+    
+    /////////////delete playlist/////////////
+    
+    @RequestMapping("/deletePlaylist/{id}")
+    public String DeletePlaylist(@PathVariable("id") Long playId) {
+    	playlistService.deletePlaylist(playId);
+    	return "redirect:/playlists";
+    }
+    
     /////////////Add playlist////////////////
     
     //create new playlist to current user
@@ -225,11 +233,5 @@ public class HomeController {
         model.addAttribute("play_song",play_song);
 
 		return "UserPage.jsp";
-	}
-
-	@RequestMapping("/playlist/{id}/delete")
-	public String delete(@PathVariable("id") Long id) {
-		playlistService.deletePlaylist(id);
-		return "redirect:/playlists";
 	}
 }
