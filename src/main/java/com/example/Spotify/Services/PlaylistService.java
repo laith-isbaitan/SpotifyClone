@@ -66,10 +66,8 @@ public class PlaylistService {
 
 		if (foundList.getSongs().contains(foundSong)) {
 			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(playlistId, songId);
-			System.out.println("before" + playlist_song.getNumOfTimesAdded());
 
 			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded() + 1);
-			System.out.println("after" + playlist_song.getNumOfTimesAdded());
 
 			play_songRepo.save(playlist_song);
 
@@ -89,6 +87,18 @@ public class PlaylistService {
 		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
 		if (optionalPlaylist.isPresent()) {
 			playlistRepo.deleteById(id);
+		}
+	}
+	public void removeSong(Long songId, Long playId) {
+		Song foundSong = songRepo.findByIdIs(songId);
+		Playlist foundList = playlistRepo.findByIdIs(playId);
+
+		if(foundList.getSongs().contains(foundSong)) {
+			foundList.getSongs().remove(foundSong);
+			
+			playlistRepo.save(foundList);
+		}else {
+			System.out.println("song not in list");
 		}
 	}
 

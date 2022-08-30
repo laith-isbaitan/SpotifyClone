@@ -233,13 +233,17 @@ public class HomeController {
 		} else {
 			model.addAttribute("User", userService.findByPlaylistId(playId));
 		}
-
-//		List<Playlist_song> play_song = play_songService.findSongsInPlaylist(playId);
-//		model.addAttribute("play_song", play_song);
 		model.addAttribute("objects", play_songService.usersPlaylistSongsQuery(playId));
 
 
 		return "UserPage.jsp";
+	}
+	
+	////////////remove song from playlist////////////
+	@GetMapping("/removeSong/{songId}/{playId}")
+	public String RemoveSong(@PathVariable("songId") Long songId,@PathVariable("playId") Long playId) {
+		playlistService.removeSong(songId, playId);
+		return "redirect:/playlist/"+playId;
 	}
 
 }
