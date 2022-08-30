@@ -150,11 +150,11 @@ public class HomeController {
 			return "addSong.jsp";
 		} else {
 			songService.createSong(song);
-			file = null;
+//			file = null;
 			System.out.println(file);
 
 			///////////////uplode img/////////////////////////
-			if(file != null) {
+			if(!file.isEmpty()) {
 				OutputStream out = null;
 			    InputStream filecontent = null;
 			    final PrintWriter writer = response.getWriter();
@@ -179,7 +179,8 @@ public class HomeController {
 
 			        song.setImageData(newPath);
 			        songService.updateSong(song);
-
+			        
+			        System.out.println("hiiiiiiiii");
 //			        writer.println("New file " + fileName + " created at " + newPath);
 
 			    } catch (IOException fne) {
@@ -223,6 +224,7 @@ public class HomeController {
 	@RequestMapping("/deleteSong/{id}")
 	public String DeleteSong(@PathVariable("id") Long songId) {
 		if (CurrentUser.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
+			System.out.println(songId);
 			songService.deleteSong(songId);
 		}
 		return "redirect:/";
