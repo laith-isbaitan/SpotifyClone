@@ -4,54 +4,64 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="ISO-8859-1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-	crossorigin="anonymous">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="/css/SongPage.css">
 
-<link rel="stylesheet" type="text/css" href="/css/user.css">
-
-
-<title>User's Playlist</title>
 </head>
+
 <body>
-	<div class="AllContainer">
-		<div class="navBar">
-			<%@ include file="/WEB-INF/navbar.jsp"%>
 
+	<div class="navBar">
+		<%@ include file="/WEB-INF/navbar.jsp"%>
+
+	</div>
+
+
+	<div class="background"></div>
+	<section>
+		<div class="album-info">
+			
+			<div class="album-details">
+				<h1>
+					<c:out value="${User.getFirstName()}"></c:out>
+					's
+					<c:out value="${currPlaylist.getName()}"></c:out>
+				</h1>
+				<br> <a href="/playlist/${currPlaylist.id}/delete">delete
+					Playlist</a>
+			</div>
 		</div>
-
-		<div class="body">
-			<h1>
-				<c:out value="${User.getFirstName()}"></c:out>
-				<c:out value="${currPlaylist.getName()}"></c:out>
-			</h1>
-			<br>
-
+		<div class="album-tracks">
 
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th scope="col">Title</th>
-						<th scope="col">Artist</th>
-						<th scope="col">Times Added</th>
+						<th class="text-center scope="col">Title</th>
+						<th class="text-center scope="col">Artist</th>
+						<th class="text-center scope="col">Times Added</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="song" items="${currPlaylist.getSongs()}" varStatus="status">
+					<c:forEach var="row" items="${objects}">
+
 						<tr>
-							<td><a href="/songs/${song.getId() }">${song.getTitle() }</a></td>
-							<td>${song.getArtist() }</td>
-							<td>${play_song[status.index].getNumOfTimesAdded()}</td>
+							<c:forEach var="items" items="${row}">
+
+								<td class="text-center"><c:out value="${items}"></c:out></td>
+							</c:forEach>
+
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-	</div>
+	</section>
 </body>
+
 </html>

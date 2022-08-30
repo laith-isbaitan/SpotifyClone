@@ -24,10 +24,10 @@ public class Song {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3, max = 30, message = "Song's title must be at least 3 characters!")
 	private String title;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3, max = 30, message = "Song's artist name must be at least 3 characters!")
 	private String artist;
 	
 	@Lob

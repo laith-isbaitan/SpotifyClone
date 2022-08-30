@@ -4,31 +4,42 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="ISO-8859-1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-	crossorigin="anonymous">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="/css/SongPage.css">
+
+
 </head>
+
 <body>
-	<div class="AllContainer">
-		<div class="navBar">
-			<%@ include file="/WEB-INF/navbar.jsp"%>
+	<div class="navBar">
+		<%@ include file="/WEB-INF/navbar.jsp"%>
+	</div>
+
+
+	<div class="background"></div>
+	<section>
+		<div class="album-info">
+			<div class="album-art">
+				<img src="https://images.pexels.com/photos/164853/pexels-photo-164853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+
+
+			</div>
+			<div class="album-details">
+				<h1>
+					<c:out value="${currSong.getTitle()}"></c:out>
+					by
+					<c:out value="${currSong.getArtist()}"></c:out>
+				</h1>
+			</div>
 		</div>
-
-
-		<h1>
-			Others who added
-			<c:out value="${currSong.getTitle()}"></c:out>
-			- <c:out value="${currSong.getArtist()}"></c:out>
-		</h1>
-		<br>
-
-		<table class="table table-striped">
+		<div class="album-tracks">
+			<table class="table table-striped">
 			<thead>
 				<tr>
 					<th scope="col">Name</th>
@@ -45,7 +56,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
-
-	</div>
+		</div>
+	</section>
 </body>
+
 </html>

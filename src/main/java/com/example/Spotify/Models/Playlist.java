@@ -24,7 +24,7 @@ public class Playlist {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3, max = 30, message = "Playlist's name must be at least 3 characters!")
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)

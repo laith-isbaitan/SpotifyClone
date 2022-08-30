@@ -28,6 +28,7 @@ import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.Playlist_song;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
+import com.example.Spotify.Repositries.Play_SongRepo;
 import com.example.Spotify.Services.PlaylistService;
 import com.example.Spotify.Services.Playlist_songService;
 import com.example.Spotify.Services.SongService;
@@ -55,7 +56,10 @@ public class HomeController {
 	private Authentication auth = null;
 	private MediUser mediUser = null;
 	private User CurrentUser = null;
-
+	private Song CurrentSong = null;
+	
+	@Autowired
+	Play_SongRepo playlist_songRepo;
 	///////// login signup page//////////////
 	// if user is logged in (principle != null) then route to dashboard ("/")
 
@@ -64,13 +68,13 @@ public class HomeController {
 			@RequestParam(value = "logout", required = false) String logout, Model model,
 			@Valid @ModelAttribute("user") User user, Principal principal) {
 
-			if (error != null) {
-				model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-			}
-			if (logout != null) {
-				model.addAttribute("logoutMessage", "Logout Successful!");
-			}
-			return "LoginSignupPage.jsp";
+		if (error != null) {
+			model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+		}
+		if (logout != null) {
+			model.addAttribute("logoutMessage", "Logout Successful!");
+		}
+		return "LoginSignupPage.jsp";
 	}
 
 	// after logging in then set auth ,mediUser and CurrentUser
@@ -78,32 +82,47 @@ public class HomeController {
 	public String home(Principal principal, Model model) {
 		// 1
 		if (principal != null) {
-			auth = SecurityContextHolder.getContext().getAuthentication();
-			mediUser = (MediUser) auth.getPrincipal();
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		mediUser = (MediUser) auth.getPrincipal();
 
-			String email = mediUser.getEmail();
-			CurrentUser = userService.findByEmail(email);
+		String email = mediUser.getEmail();
+		CurrentUser = userService.findByEmail(email);
 
-			model.addAttribute("currUser", CurrentUser);
-			if (CurrentUser != null) {
-				CurrentUser.setLastLogin(new Date());
-				userService.updateUser(CurrentUser);
-	        }
-			
-	        //to create song cards
-	        List<Song> songs = songService.allSongs();
-	        model.addAttribute("songs", songs);
-	        
-	        //to get playlist choices in song cards
-	        List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
-	        model.addAttribute("playlists",playlists);
-	        
-	        return "dashboard.jsp";
-		}else {
+		model.addAttribute("currUser", CurrentUser);
+		if (CurrentUser != null) {
+			CurrentUser.setLastLogin(new Date());
+			userService.updateUser(CurrentUser);
+
+			// ***********extra************
+//	             If the user is an ADMIN or SUPER_ADMIN they will be redirected to the admin
+//	             page
+			if (CurrentUser.getRoles().get(0).getName().contains("ROLE_ADMIN")) {
+//	                model.addAttribute("currentUser", userService.findByEmail(email));
+//	                model.addAttribute("users", userService.findAll());
+
+				return "adminPage.jsp";
+			}
+			// ***************************
+
+			// All other users are redirected to the home page
+		}
+		// to create song cards
+		List<Song> songs = songService.allSongs();
+		model.addAttribute("songs", songs);
+
+		model.addAttribute("objects", play_songService.findAllAddsforSong2());
+
+		// to get playlist choices in song cards
+		List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
+		model.addAttribute("playlists", playlists);
+
+		return "dashboard.jsp";
+    } else {
 			return "redirect:/login";
 		}
 
-    }
+	}
+  
    ////////////////// regestration/////////////////
 
    @PostMapping("/registration")
@@ -119,26 +138,24 @@ public class HomeController {
 		}
         return "redirect:/";
     }
-   
-   ///////////create new song//////////
 
-   @GetMapping("/songs/new")
-    public String NewProduct(@ModelAttribute("addSongForm") Song song) {
-        return "addSong.jsp";
-   }
+	/////////// create new song//////////
 
-   @PostMapping("/songs/new")
-    public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song
-    		, BindingResult result) {
-       
-	   if (result.hasErrors()) {
-            return "addSong.jsp";
-        } else {
-            songService.createSong(song);
-            return "redirect:/";
-        }
-    }
-   ///////////Admin delete song//////////////
+	@GetMapping("/songs/new")
+	public String NewProduct(@ModelAttribute("addSongForm") Song song) {
+		return "addSong.jsp";
+	}
+
+	@PostMapping("/songs/new")
+	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
+		if (result.hasErrors()) {
+			return "addSong.jsp";
+		} else {
+			songService.createSong(song);
+			return "redirect:/";
+		}
+	}
+     ///////////Admin delete song//////////////
    @RequestMapping("/deleteSong/{id}")
    public String DeleteSong(@PathVariable("id") Long songId) {
 	   if(CurrentUser.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
@@ -146,6 +163,7 @@ public class HomeController {
 	   }
 	   return "redirect:/";
    }
+
    /////////////////song page/////////////////
    
    @GetMapping("/songs/{id}")
@@ -159,18 +177,19 @@ public class HomeController {
         return "SongPage.jsp";
     }
 
-    ////////////////view playlist////////////////
-    
-    //playlists of current user
-    @GetMapping("/playlists")
-    public String playlists(Model model) {
 
-       Long userId = CurrentUser.getId();
-        model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
-        return "Playlist.jsp";
-    }
-    
-    //playlists of user based on id
+	//////////////// view playlist////////////////
+
+	// playlists of current user
+	@GetMapping("/playlists")
+	public String playlists(Model model) {
+
+		Long userId = CurrentUser.getId();
+		model.addAttribute("playlists", playlistService.findAllUsersPlaylists(userId));
+		return "Playlist.jsp";
+	}
+  
+      //playlists of user based on id
     @GetMapping("/playlists/{id}")
     public String PlaylistsOfUserId(@PathVariable("id") Long id, Model model) {
     	model.addAttribute("playlists", playlistService.findAllUsersPlaylists(id));
@@ -184,9 +203,9 @@ public class HomeController {
     	playlistService.deletePlaylist(playId);
     	return "redirect:/playlists";
     }
-    
-    /////////////Add playlist////////////////
-    
+
+	///////////// Add playlist////////////////
+
     //create new playlist to current user
     @GetMapping("/playlists/new")
     public String addPlaylist(@ModelAttribute("playlist") Playlist playlist) {
@@ -204,7 +223,11 @@ public class HomeController {
             return "redirect:/playlists";
         }
     }
-   
+
+		}
+	}
+
+
    //////////////add song to playlist of current user/////////////////
    
    @GetMapping("/playlist/addSong")
@@ -214,9 +237,8 @@ public class HomeController {
 	   playlistService.AddSongToPlaylist(playlistId,songId);
 	   return "redirect:/";
    }
-    
     ////////////user playlist page ////////////
-    
+
     @GetMapping("/playlist/{playId}")
     public String playlistData(@PathVariable("playId") Long playId, Model model) {
     	
@@ -234,4 +256,6 @@ public class HomeController {
 
 		return "UserPage.jsp";
 	}
+
+
 }

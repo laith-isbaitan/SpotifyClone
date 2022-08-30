@@ -17,12 +17,12 @@ import com.example.Spotify.Repositries.SongRepo;
 public class PlaylistService {
 	@Autowired
 	private Play_SongRepo play_songRepo;
-	
+
 	private final PlaylistRepo playlistRepo;
-	
+
 	private final SongRepo songRepo;
 
-	public PlaylistService(PlaylistRepo playlistRepo,SongRepo songRepo) {
+	public PlaylistService(PlaylistRepo playlistRepo, SongRepo songRepo) {
 		this.playlistRepo = playlistRepo;
 		this.songRepo = songRepo;
 	}
@@ -59,34 +59,29 @@ public class PlaylistService {
 	public List<Playlist> getUnassignedSongs(Song song) {
 		return playlistRepo.findBySongsNotContains(song);
 	}
-	
+
 	public Playlist AddSongToPlaylist(Long playlistId, Long songId) {
 		Playlist foundList = playlistRepo.findByIdIs(playlistId);
 		Song foundSong = songRepo.findByIdIs(songId);
 
-		if(foundList.getSongs().contains(foundSong)) {
-			System.out.println("exists");
+		if (foundList.getSongs().contains(foundSong)) {
 			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(playlistId, songId);
-			
-            System.out.println("before"+playlist_song.getNumOfTimesAdded());
-			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded()+1);
-            System.out.println("after"+playlist_song.getNumOfTimesAdded());
-            
+			System.out.println("before" + playlist_song.getNumOfTimesAdded());
+
+			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded() + 1);
+			System.out.println("after" + playlist_song.getNumOfTimesAdded());
+
 			play_songRepo.save(playlist_song);
 
-		}else {
-//            Long p = (long) 1;
-//            Long s = (long) 1;
-//            Playlist_song playlist_song1 = play_songRepo.findAllByPlaylist_idAndSong_id(p, s);
-//            System.out.println(playlist_song1.getNumOfTimesAdded());
-			
+		} else {
+
 			foundList.getSongs().add(foundSong);
-//			foundSong.getPlaylists().add(foundList);
 
 			songRepo.save(foundSong);
 			playlistRepo.save(foundList);
 
 		}
+
 		return foundList;
 	}
 	

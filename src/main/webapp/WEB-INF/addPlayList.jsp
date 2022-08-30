@@ -5,38 +5,41 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 
-<title>Insert title here</title>
-
-<link rel="stylesheet" type="text/css" href="/css/addSong.css">
+<link rel="stylesheet" type="text/css" href="/css/addPlaylist.css">
 
 </head>
+
 <body>
+	<%@ include file="/WEB-INF/navbar.jsp"%>
 
-	<div class="AllContainer">
+	<div class="login-wrap">
+		<div class="login-html">
+			<form:form action="/playlists/new" method="post"
+				modelAttribute="playlist">
+				<h1>Add a New Playlist</h1>
 
-		<%@ include file="/WEB-INF/navbar.jsp"%>
 
+				<div class="login-form">
+					<div class="group">
 
-		<center>
-			<div class="formContainer">
-				<form:form action="/playlists/new" method="post"
-					modelAttribute="playlist">
-					<legend>Add a playlist:</legend>
-					<p>
-						<form:errors path="name"></form:errors>
-						<form:label path="name">Playlist Name: </form:label>
-						<form:input type="text" path="name" />
-					</p>
+						<form:errors class="error" path="name"></form:errors>
+						<form:label path="name" for="user" class="label">Playlist Name</form:label>
+						<form:input path="name" id="user" type="text" class="input" />
+					</div>
 
-					<input class="input" class="button" type="submit" value="Add" />
-				</form:form>
-			</div>
-		</center>
+					<div class="group">
+						<input type="submit" class="button" value="Add">
+					</div>
+			</form:form>
 
-	</div>
+		</div>
 </body>
 </html>

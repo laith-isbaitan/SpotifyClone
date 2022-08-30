@@ -23,15 +23,15 @@ public class SongService {
 		return songRepo.save(song);
 	}
 
-	public Song findSong(Long id) {
-		// Optional means the object can exist or not
-		Optional<Song> optionalSong = songRepo.findById(id);
-		if (optionalSong.isPresent()) {
-			return optionalSong.get();
-		} else {
-			return null;
-		}
-	}
+//	public Song findSong(Long id) {
+//		// Optional means the object can exist or not
+//		Optional<Song> optionalSong = songRepo.findById(id);
+//		if (optionalSong.isPresent()) {
+//			return optionalSong.get();
+//		} else {
+//			return null;
+//		}
+//	}
 
 	public void deleteSong(Long id) {
 		Optional<Song> optionalSong = songRepo.findById(id);
@@ -53,12 +53,24 @@ public class SongService {
 		return songRepo.findByIdIs(id);
 	}
 
-	public List<Song> getAssignedPlaylists(Playlist playlist) {
-		return songRepo.findAllByPlaylists(playlist);
-	}
+//	public List<Song> getAssignedPlaylists(Playlist playlist) {
+//		return songRepo.findAllByPlaylists(playlist);
+//	}
+//
+//	public List<Song> getUnassignedPlaylists(Playlist playlist) {
+//		return songRepo.findByPlaylistsNotContains(playlist);
+//	}
 
-	public List<Song> getUnassignedPlaylists(Playlist playlist) {
-		return songRepo.findByPlaylistsNotContains(playlist);
+//	public List<Object[]> findAllAddsforSong() {
+//		return songRepo.findByAllAddsforSong();
+//
+//	}
+
+	public void DeleteSongfromPlaylist(Long playlistId, Long songId) {
+		Optional<Song> optionalPlaylist = songRepo.findById(songId);
+		if (optionalPlaylist.isPresent()) {
+			songRepo.deleteById(songId);
+		}
 	}
 
 	

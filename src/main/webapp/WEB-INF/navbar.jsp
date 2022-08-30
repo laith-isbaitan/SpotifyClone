@@ -16,7 +16,7 @@
 
 		<nav class="navbar navbar-expand-xl navbar-light bg-light">
 			<div class="container-fluid">
-				<img src="/images/spotifylogo3.png" alt="spotify Logo" width="50"
+				<img src="/images/spotifygreen.png" alt="spotify Logo" width="70"
 					height="50">
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarText"

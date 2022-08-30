@@ -20,6 +20,7 @@ public class Playlist_song {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
     @Column(columnDefinition = "integer default 1")
 	private int NumOfTimesAdded ;
 

@@ -66,46 +66,51 @@
 		<a href="/songs/new">Insert a new song</a>
 	</p>
 
-		<div class="container">
-			<c:forEach var="song" items="${songs}">
-					<img alt="" src="${song.getImageData() }" />
-					<center>
-						<div class="card2">
-							<!-- adding song to playlist -->
-							<form action="/playlist/addSong" method="get" >
-							
-								<h1>
-									<a href="/songs/${song.id}"><c:out value="${song.title}"></c:out></a>
-								</h1>
-								<h2>
-									<c:out value="${song.artist}"></c:out>
-								</h2>
-		
-								<div>
-									<select name="playlistId">
-										<c:forEach var="play" items="${playlists}">
-											<option value="${play.id}" >${play.name}</option>
-										</c:forEach>
-									</select>
-								</div>
-		
-								<p id="count">0 Add(s)</p>
-								<input type="hidden" name="songId" value="${song.id }" />
-								<input class="addBtn" type="submit" value="ADD" />
-							</form>
-							
-							<!-- deleting song -->
+	<div class="container">
+
+		<c:forEach var="song" items="${objects}">
+			<form action="/playlist/addSong" method="get">
+
+				<center>
+					<div class="card2">
+
+
+						<h1>
+							<a href="/songs/${song[0]}">${song[1]}</a>
+						</h1>
+
+						<h2>
+							<c:out value="${song[2]}"></c:out>
+						</h2>
+
+
+						<div>
+							<select name="playlistId">
+								<c:forEach var="play" items="${playlists}">
+									<option value="${play.getId()}">${play.getName()}</option>
+								</c:forEach>
+							</select>
+						</div>
+
+						<p><c:out value="${song[3]}"></c:out>
+						Add(s)</p>
+						<br> <input type="hidden" name="songId"
+							value="${song[0]}" /> <input class="addBtn" type="submit"
+							value="ADD" />
+					</div>
+				</center>
+			</form>
+      
+      							<!-- deleting song -->
 							<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
 								<form action="/deleteSong/${song.id }">
 									<input class="delete button" type="submit" value="DELETE"/>
 								</form>
 							</c:if>
 
-						</div>
-					</center>
-				
-			</c:forEach>
-		</div>
+		</c:forEach>
+	</div>
+
 
 
 </body>
