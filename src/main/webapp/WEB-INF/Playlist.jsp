@@ -28,7 +28,7 @@
 	<section>
 
 		<div class="album-details">
-			<h1>Your Playlists</h1>
+			<h1>Playlists</h1>
 		</div>
 		<div class="album-tracks">
 			<ol>
