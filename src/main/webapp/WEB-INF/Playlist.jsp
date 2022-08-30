@@ -23,35 +23,26 @@
 	</div>
 
 
-	<div class="d-grid gap-3">
-
-		<p class="tabb">Playlists</p>
-		<c:forEach var="playlist" items="${playlists}">
-
-			<div class="p-2 bg-light border">
-				<a href="/playlist/${playlist.id}">
-				<c:out	value="${playlist.name}"></c:out>
-				</a>&nbsp&nbsp&nbsp&nbsp<a
-					href="/deletePlaylist/${playlist.id }">DELETE</a>
-			</div>
-
-	<div class="background"></div>
+	<div class="background">
+	</div>
 	<section>
 
 		<div class="album-details">
 			<h1>Your Playlists</h1>
 		</div>
-	</div>
-	<div class="album-tracks">
-		<ol>
-			<c:forEach var="playlist" items="${playlists}">
-				<li><a class="lll" href="/playlist/${playlist.id}"> <c:out
-							value="${playlist.name}"></c:out>
-				</a></li>
-			</c:forEach>
+		<div class="album-tracks">
+			<ol>
+				<c:forEach var="playlist" items="${playlists}">
+					<li>
+						<a class="lll" href="/playlist/${playlist.id}"> 
+						<c:out	value="${playlist.name}"></c:out></a>
+						
+						<a href="/deletePlaylist/${playlist.id }">DELETE</a>
+					</li>
+				</c:forEach>
 
-		</ol>
-	</div>
+			</ol>
+		</div>
 	</section>
 </body>
 
