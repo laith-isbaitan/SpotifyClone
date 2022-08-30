@@ -45,6 +45,7 @@
 						<th class="lll">Title</th>
 						<th class="lll">Artist</th>
 						<th class="lll">Times Added</th>
+						<th class="lll">Action</th>
 					</tr>
 				</thead>
 				<tbody>

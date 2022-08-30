@@ -145,12 +145,14 @@ public class HomeController {
 
 	@PostMapping(path = "/songs/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
 	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result
-			,@RequestPart MultipartFile file, HttpServletResponse response,HttpServletRequest request) throws IOException, ServletException {
+			,@RequestPart MultipartFile file, HttpServletResponse response,HttpServletRequest request,
+			Principal principal, Model model) throws IOException, ServletException {
 		if (result.hasErrors()) {
 			return "addSong.jsp";
 		} else {
 			songService.createSong(song);
-//			file = null;
+			
+			file = null;
 			System.out.println(file);
 
 			///////////////uplode img/////////////////////////
@@ -177,7 +179,7 @@ public class HomeController {
 			            out.write(bytes, 0, read);
 			        }
 
-			        song.setImageData(newPath);
+			        song.setImageData(newPath+File.separator+fileName);
 			        songService.updateSong(song);
 			        
 			        System.out.println("hiiiiiiiii");
@@ -201,7 +203,7 @@ public class HomeController {
 			        }
 			    }
 			}
-			
+			System.out.println("helooooo");
 		    //////////////////////////
 			return "redirect:/";
 		}
