@@ -45,16 +45,20 @@
 						<th class="text-center scope="col">Title</th>
 						<th class="text-center scope="col">Artist</th>
 						<th class="text-center scope="col">Times Added</th>
+						<th class="text-center scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="row" items="${objects}">
-
+					<c:forEach var="item" items="${objects}">
 						<tr>
-							<c:forEach var="items" items="${row}">
+							<!--<c:forEach var="items" items="${row}">
 
 								<td class="text-center"><c:out value="${items}"></c:out></td>
-							</c:forEach>
+							</c:forEach> -->
+								<td class="text-center"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
+								<td class="text-center"><c:out value="${item[2]}"></c:out></td>
+								<td class="text-center"><c:out value="${item[3]}"></c:out></td>
+								<td class="text-center"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
 
 						</tr>
 					</c:forEach>

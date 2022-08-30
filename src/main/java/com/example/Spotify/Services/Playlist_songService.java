@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Spotify.Models.Playlist;
 import com.example.Spotify.Models.Playlist_song;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Repositries.Play_SongRepo;
