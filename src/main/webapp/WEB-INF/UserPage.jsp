@@ -22,13 +22,14 @@
 
 	</div>
 
+
 	<div class="background"></div>
 	<section>
 		<div class="album-info">
 			
 			<div class="album-details">
 				<h1>
-					<c:out value="${currUser.getFirstName()}"></c:out>
+					<c:out value="${User.getFirstName()}"></c:out>
 					's
 					<c:out value="${currPlaylist.getName()}"></c:out>
 				</h1>

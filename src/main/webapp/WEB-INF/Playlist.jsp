@@ -22,6 +22,19 @@
 		<a href="/playlists/new">Add a new playlist</a>
 	</div>
 
+
+	<div class="d-grid gap-3">
+
+		<p class="tabb">Playlists</p>
+		<c:forEach var="playlist" items="${playlists}">
+
+			<div class="p-2 bg-light border">
+				<a href="/playlist/${playlist.id}">
+				<c:out	value="${playlist.name}"></c:out>
+				</a>&nbsp&nbsp&nbsp&nbsp<a
+					href="/deletePlaylist/${playlist.id }">DELETE</a>
+			</div>
+
 	<div class="background"></div>
 	<section>
 

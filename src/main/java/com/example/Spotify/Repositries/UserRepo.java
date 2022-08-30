@@ -19,14 +19,15 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
 	User findByIdIs(Long id);
 
-	List<User> findByPlaylistIdIs(Long playlistId);
+	User findByPlaylistIdIs(Long playlistId);
 
-	@Query(value = "SELECT concat(users.firstName, users.lastName), sum(Playlist_song.NumOfTimesAdded) FROM users, playlists, playlist_song, songs"
+	@Query(value = "SELECT users.id, concat(users.first_name, users.last_name), sum(Playlist_song.num_of_times_added)"
+			+" FROM users, playlists, playlist_song, songs"
+			+" WHERE users.id = playlists.user_id AND" 
+			+" playlists.id = playlist_song.playlist_id AND"
+			+" playlist_song.song_id = ?1"
+			+" group BY concat(users.first_name, users.last_name);", nativeQuery = true)
+	List<Object[]> findAllBySongs(Long SongId);
 
-			+ "WHERE users.id = playlists.user_id and" + "playlists.id = playlist_song.playlist_id and"
-			+ "playlist_song.song_id = songs.id"
-			+ "group BY concat(users.firstName, users.lastName);", nativeQuery = true)
-
-	List<Object[]> findAllBySongs();
-
+	
 }

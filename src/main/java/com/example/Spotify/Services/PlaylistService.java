@@ -74,20 +74,17 @@ public class PlaylistService {
 			play_songRepo.save(playlist_song);
 
 		} else {
+
 			foundList.getSongs().add(foundSong);
 
+			songRepo.save(foundSong);
 			playlistRepo.save(foundList);
-
-			Long p = (long) 3;
-			Long s = (long) 2;
-			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(p, s);
-			System.out.println(playlist_song.getNumOfTimesAdded());
 
 		}
 
 		return foundList;
 	}
-
+	
 	public void deletePlaylist(Long id) {
 		Optional<Playlist> optionalPlaylist = playlistRepo.findById(id);
 		if (optionalPlaylist.isPresent()) {

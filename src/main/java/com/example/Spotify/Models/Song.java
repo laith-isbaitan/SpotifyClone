@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -28,10 +29,15 @@ public class Song {
 
 	@Size(min = 3, max = 30, message = "Song's artist name must be at least 3 characters!")
 	private String artist;
+	
+	@Lob
+	private byte[] imageData;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
-	@JoinTable(name = "playlist_song", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+	@JoinTable(name = "playlist_song"
+	, joinColumns = @JoinColumn(name = "song_id")
+	, inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists;
 
 	public Long getId() {
@@ -56,6 +62,14 @@ public class Song {
 
 	public void setArtist(String artist) {
 		this.artist = artist;
+	}
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
 	}
 
 	public List<Playlist> getPlaylists() {

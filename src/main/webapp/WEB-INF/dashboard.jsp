@@ -100,9 +100,17 @@
 					</div>
 				</center>
 			</form>
+      
+      							<!-- deleting song -->
+							<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
+								<form action="/deleteSong/${song.id }">
+									<input class="delete button" type="submit" value="DELETE"/>
+								</form>
+							</c:if>
 
 		</c:forEach>
 	</div>
+
 
 
 </body>

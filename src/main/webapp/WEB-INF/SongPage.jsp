@@ -28,6 +28,7 @@
 			<div class="album-art">
 				<img src="https://images.pexels.com/photos/164853/pexels-photo-164853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
 
+
 			</div>
 			<div class="album-details">
 				<h1>
@@ -38,14 +39,23 @@
 			</div>
 		</div>
 		<div class="album-tracks">
-			<ol>
-				<li><span>Feel Invincible</span><span>3:49</span></li>
-				<li><span>Back From The Dead</span><span>3:33</span></li>
-				<li><span>Stars</span><span>3:47</span></li>
-				<li><span>I Want To Live</span><span>3:28</span></li>
-				<li><span>Undefeated</span><span>3:35</span></li>
-				<li><span>Famous</span><span>3:18</span></li>
-			</ol>
+			<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Times Added</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="user" items="${users }">
+					<tr>
+					<!-- user[0] is the users id -->
+						<td><a href="/playlists/${user[0] }">${user[1] }</a></td>
+						<td>${user[2] }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 		</div>
 	</section>
 </body>
