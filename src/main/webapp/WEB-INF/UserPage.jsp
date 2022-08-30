@@ -39,22 +39,25 @@
 		</div>
 		<div class="album-tracks">
 
-			<table class="table table-striped">
+			<table class="table">
 				<thead>
 					<tr>
-						<th class="text-center scope="col">Title</th>
-						<th class="text-center scope="col">Artist</th>
-						<th class="text-center scope="col">Times Added</th>
-						<th class="text-center scope="col">Action</th>
+						<th class="lll">Title</th>
+						<th class="lll">Artist</th>
+						<th class="lll">Times Added</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="item" items="${objects}">
-						<tr>
-								<td class="text-center"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
-								<td class="text-center"><c:out value="${item[2]}"></c:out></td>
-								<td class="text-center"><c:out value="${item[3]}"></c:out></td>
-								<td class="text-center"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
+
+						<tr class="lll">
+             
+              	<td class="lll"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
+								<td class="lll"><c:out value="${item[2]}"></c:out></td>
+								<td class="lll"><c:out value="${item[3]}"></c:out></td>
+								<td class="lll"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
+
+
 						</tr>
 					</c:forEach>
 				</tbody>

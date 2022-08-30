@@ -29,5 +29,4 @@ public interface UserRepo extends CrudRepository<User, Long> {
 			+" group BY concat(users.first_name, users.last_name);", nativeQuery = true)
 	List<Object[]> findAllBySongs(Long SongId);
 
-	
 }

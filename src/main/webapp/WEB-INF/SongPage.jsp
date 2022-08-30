@@ -39,19 +39,19 @@
 			</div>
 		</div>
 		<div class="album-tracks">
-			<table class="table table-striped">
+			<table class="table">
 			<thead>
 				<tr>
-					<th scope="col">Name</th>
-					<th scope="col">Times Added</th>
+					<th class="lll" scope="col">Name</th>
+					<th class="lll" scope="col">Times Added</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="user" items="${users }">
 					<tr>
 					<!-- user[0] is the users id -->
-						<td><a href="/playlists/${user[0] }">${user[1] }</a></td>
-						<td>${user[2] }</td>
+						<td class="lll"><a class="lll" href="/playlists/${user[0] }">${user[1] }</a></td>
+						<td class="lll">${user[2] }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

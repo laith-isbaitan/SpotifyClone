@@ -10,14 +10,16 @@
 	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 	crossorigin="anonymous">
 <title>Insert title here</title>
+
+
 </head>
 <body>
 	<div class="navBar">
 
 		<nav class="navbar navbar-expand-xl navbar-light bg-light">
 			<div class="container-fluid">
-				<img src="/images/spotifygreen.png" alt="spotify Logo" width="70"
-					height="50">
+				<a href="/"> <img src="/images/spotifygreen.png"
+					alt="spotify Logo" width="70" height="50"></a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarText"
 					aria-controls="navbarText" aria-expanded="false"
@@ -35,7 +37,7 @@
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" /> <span class="navbar-text"> <input
 						class="nav-link active" aria-current="page" type="submit"
-						value="Logout!" />
+						value="Logout" />
 					</span>
 				</form>
 			</div>
