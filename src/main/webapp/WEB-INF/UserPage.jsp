@@ -55,7 +55,6 @@
 								<td class="text-center"><c:out value="${item[2]}"></c:out></td>
 								<td class="text-center"><c:out value="${item[3]}"></c:out></td>
 								<td class="text-center"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
-
 						</tr>
 					</c:forEach>
 				</tbody>

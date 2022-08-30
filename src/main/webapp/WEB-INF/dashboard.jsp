@@ -72,7 +72,7 @@
 			<form action="/playlist/addSong" method="get">
 
 				<center>
-					<div class="card2">
+					<div class="card2" style="background-image: url(${song[4]})">
 
 
 						<h1>
