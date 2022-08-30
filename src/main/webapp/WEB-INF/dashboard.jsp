@@ -94,19 +94,19 @@
 
 						<p><c:out value="${song[3]}"></c:out>
 						Add(s)</p>
-						<br> <input type="hidden" name="songId"
-							value="${song[0]}" /> <input class="addBtn" type="submit"
-							value="ADD" />
+						<br>
+						<input type="hidden" name="songId" value="${song[0]}" />
+						<input class="addBtn" type="submit" value="ADD" />
 					</div>
 				</center>
 			</form>
       
-      							<!-- deleting song -->
-							<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
-								<form action="/deleteSong/${song[0] }">
-									<input class="delete button" type="submit" value="DELETE"/>
-								</form>
-							</c:if>
+  			<!-- deleting song -->
+			<c:if test="${currUser.getRoles().get(0).getName()== 'ROLE_ADMIN'}">
+				<form action="/deleteSong/${song[0] }">
+					<input class="delete button" type="submit" value="DELETE"/>
+				</form>
+			</c:if>
 
 		</c:forEach>
 	</div>

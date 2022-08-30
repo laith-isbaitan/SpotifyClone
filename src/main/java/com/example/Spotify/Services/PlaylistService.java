@@ -77,7 +77,7 @@ public class PlaylistService {
 
 			foundList.getSongs().add(foundSong);
 
-			songRepo.save(foundSong);
+//			songRepo.save(foundSong);
 			playlistRepo.save(foundList);
 
 		}

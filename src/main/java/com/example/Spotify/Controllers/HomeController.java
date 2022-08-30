@@ -99,7 +99,7 @@ public class HomeController {
 			List<Song> songs = songService.allSongs();
 			model.addAttribute("songs", songs);
 
-			model.addAttribute("objects", play_songService.findAllAddsforSong2());
+			model.addAttribute("objects", play_songService.dashboardSonglistQuery());
 
 			// to get playlist choices in song cards
 			List<Playlist> playlists = playlistService.findAllUsersPlaylists(CurrentUser.getId());
@@ -224,7 +224,7 @@ public class HomeController {
 
 	@GetMapping("/playlist/{playId}")
 	public String playlistData(@PathVariable("playId") Long playId, Model model) {
-
+		System.out.println(playId);
 		Playlist playlist = playlistService.findById(playId);
 		model.addAttribute("currPlaylist", playlist);
 
@@ -234,8 +234,10 @@ public class HomeController {
 			model.addAttribute("User", userService.findByPlaylistId(playId));
 		}
 
-		List<Playlist_song> play_song = play_songService.findSongsInPlaylist(playId);
-		model.addAttribute("play_song", play_song);
+//		List<Playlist_song> play_song = play_songService.findSongsInPlaylist(playId);
+//		model.addAttribute("play_song", play_song);
+		model.addAttribute("objects", play_songService.usersPlaylistSongsQuery(playId));
+
 
 		return "UserPage.jsp";
 	}

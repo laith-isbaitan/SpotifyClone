@@ -23,13 +23,13 @@ public class Playlist_songService {
 
 	}
 
-	public List<Object[]> findAllAddsforSong2() {
-		return play_songRepo.findByAllAddsforSong2();
+	public List<Object[]> dashboardSonglistQuery() {
+		return play_songRepo.dashboardSonglistQuery();
 
 	}
 
-	public List<Object[]> findAllAddsforSong3() {
-		return play_songRepo.findByAllAddsforSong3();
+	public List<Object[]> usersPlaylistSongsQuery(Long playlistId) {
+		return play_songRepo.usersPlaylistSongsQuery(playlistId);
 
 	}
 }
