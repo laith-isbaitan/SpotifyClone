@@ -51,15 +51,10 @@
 				<tbody>
 					<c:forEach var="item" items="${objects}">
 						<tr>
-							<!--<c:forEach var="items" items="${row}">
-
-								<td class="text-center"><c:out value="${items}"></c:out></td>
-							</c:forEach> -->
 								<td class="text-center"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
 								<td class="text-center"><c:out value="${item[2]}"></c:out></td>
 								<td class="text-center"><c:out value="${item[3]}"></c:out></td>
 								<td class="text-center"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
-
 						</tr>
 					</c:forEach>
 				</tbody>

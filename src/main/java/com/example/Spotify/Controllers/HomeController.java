@@ -1,16 +1,23 @@
 package com.example.Spotify.Controllers;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,10 +29,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Spotify.Models.MediUser;
 import com.example.Spotify.Models.Playlist;
-import com.example.Spotify.Models.Playlist_song;
 import com.example.Spotify.Models.Song;
 import com.example.Spotify.Models.User;
 import com.example.Spotify.Repositries.Play_SongRepo;
@@ -135,15 +143,81 @@ public class HomeController {
 		return "addSong.jsp";
 	}
 
-	@PostMapping("/songs/new")
-	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result) {
+	@PostMapping(path = "/songs/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+	public String createNewSong(@Valid @ModelAttribute("addSongForm") Song song, BindingResult result
+			,@RequestPart MultipartFile file, HttpServletResponse response,HttpServletRequest request) throws IOException, ServletException {
 		if (result.hasErrors()) {
 			return "addSong.jsp";
 		} else {
 			songService.createSong(song);
+			file = null;
+			System.out.println(file);
+
+			///////////////uplode img/////////////////////////
+			if(file != null) {
+				OutputStream out = null;
+			    InputStream filecontent = null;
+			    final PrintWriter writer = response.getWriter();
+			    String path = "C:\\Users\\li1\\Downloads";
+			    final Part filePart = request.getPart("file");
+			    final String fileName = getFileName(filePart);
+			    
+			    String newPath= "C:\\Users\\li1\\Downloads";
+			    try {
+
+			        out = new FileOutputStream(new File(newPath + File.separator
+			                + fileName));
+			        
+			        filecontent = filePart.getInputStream();
+
+			        int read = 0;
+			        final byte[] bytes = new byte[1024];
+
+			        while ((read = filecontent.read(bytes)) != -1) {
+			            out.write(bytes, 0, read);
+			        }
+
+			        song.setImageData(newPath);
+			        songService.updateSong(song);
+
+//			        writer.println("New file " + fileName + " created at " + newPath);
+
+			    } catch (IOException fne) {
+			        writer.println("You either did not specify a file to upload or are "
+			                + "trying to upload a file to a protected or nonexistent "
+			                + "location.");
+			        writer.println("<br/> ERROR: " + fne.getMessage());
+
+			    } finally {
+			        if (out != null) {
+			            out.close();
+			        }
+			        if (filecontent != null) {
+			            filecontent.close();
+			        }
+			        if (writer != null) {
+			            writer.close();
+			        }
+			    }
+			}
+			
+		    //////////////////////////
 			return "redirect:/";
 		}
 	}
+	private String getFileName(final Part file) {
+	    final String partHeader = file.getHeader("content-disposition");
+//	    LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+	    for (String content : file.getHeader("content-disposition").split(";")) {
+	        if (content.trim().startsWith("filename")) {
+	            return content.substring(
+	                    content.indexOf('=') + 1).trim().replace("\"", "");
+	        }
+	    }
+	    return null;
+	}
+	//////////////////////////////
+	
 
 	/////////// Admin delete song//////////////
 	@RequestMapping("/deleteSong/{id}")
