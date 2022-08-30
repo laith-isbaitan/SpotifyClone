@@ -224,7 +224,6 @@ public class HomeController {
 	@RequestMapping("/deleteSong/{id}")
 	public String DeleteSong(@PathVariable("id") Long songId) {
 		if (CurrentUser.getRoles().get(0).getName().equals("ROLE_ADMIN")) {
-			System.out.println(songId);
 			songService.deleteSong(songId);
 		}
 		return "redirect:/";

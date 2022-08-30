@@ -71,11 +71,11 @@ a.rrr{
 
 .login-html {
 	
-	position: absolute;
-	padding: 30px 70px 70px 70px;
-	background: rgba(45, 94, 42, 0.9);
-	border-radius: 20px;
-	padding-top:20px; 
+background: rgba(45, 94, 42, 0.9);
+    border-radius: 20px;
+    padding: 50px;
+    border-radius: 25px;
+    margin: 40px;
 	}
 
 
