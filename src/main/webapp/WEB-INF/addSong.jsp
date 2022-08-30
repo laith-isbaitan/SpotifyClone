@@ -23,10 +23,9 @@
 
 	<div class="login-wrap">
 		<div class="login-html">
-			<form:form action="/songs/new" method="post"
+			<form:form action="/songs/new" method="post" enctype="multipart/form-data"
 				modelAttribute="addSongForm">
 				<h1>Add a New Song</h1>
-
 
 				<div class="login-form">
 					<div class="group">
@@ -44,7 +43,7 @@
 					</div>
           
           <!-- taking the path value and putting it in hidden input -->
-					<form:input type="file" id="file" path="imageData" accept="image/jpg" />
+					<input type="file" id="file" name="file" accept="image/jpg" />
 					<div class="group">
 						<input type="submit" class="button" value="Add Song" />
 					</div>

@@ -22,6 +22,9 @@ public class SongService {
 	public Song createSong(Song song) {
 		return songRepo.save(song);
 	}
+	public Song updateSong(Song song) {
+		return songRepo.save(song);
+	}
 
 //	public Song findSong(Long id) {
 //		// Optional means the object can exist or not

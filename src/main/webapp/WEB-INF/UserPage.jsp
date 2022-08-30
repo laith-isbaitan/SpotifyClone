@@ -48,13 +48,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="row" items="${objects}">
+					<c:forEach var="item" items="${objects}">
 
 						<tr class="lll">
-							<c:forEach var="items" items="${row}">
+             
+              	<td class="lll"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
+								<td class="lll"><c:out value="${item[2]}"></c:out></td>
+								<td class="lll"><c:out value="${item[3]}"></c:out></td>
+								<td class="lll"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
 
-								<td class="lll"><c:out value="${items}"></c:out></td>
-							</c:forEach>
 
 						</tr>
 					</c:forEach>

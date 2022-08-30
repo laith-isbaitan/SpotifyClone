@@ -46,7 +46,8 @@
 		<c:forEach var="song" items="${objects}">
 			<form action="/playlist/addSong" method="get">
 
-				<div class="login-html">
+				<div class="login-html" style="background-image: url(${song[4]})">
+
 
 					<div class="group">
 						<h1>

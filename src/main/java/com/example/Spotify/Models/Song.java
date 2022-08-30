@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,8 +32,7 @@ public class Song {
 	@Size(min = 3, max = 30, message = "Song's artist name must be at least 3 characters!")
 	private String artist;
 	
-	@Lob
-	private byte[] imageData;
+	private String imageData;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -64,11 +65,11 @@ public class Song {
 		this.artist = artist;
 	}
 
-	public byte[] getImageData() {
+	public String getImageData() {
 		return imageData;
 	}
 
-	public void setImageData(byte[] imageData) {
+	public void setImageData(String imageData) {
 		this.imageData = imageData;
 	}
 
