@@ -39,21 +39,21 @@
 		</div>
 		<div class="album-tracks">
 
-			<table class="table table-striped">
+			<table class="table">
 				<thead>
 					<tr>
-						<th class="text-center scope="col">Title</th>
-						<th class="text-center scope="col">Artist</th>
-						<th class="text-center scope="col">Times Added</th>
+						<th class="lll">Title</th>
+						<th class="lll">Artist</th>
+						<th class="lll">Times Added</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="row" items="${objects}">
 
-						<tr>
+						<tr class="lll">
 							<c:forEach var="items" items="${row}">
 
-								<td class="text-center"><c:out value="${items}"></c:out></td>
+								<td class="lll"><c:out value="${items}"></c:out></td>
 							</c:forEach>
 
 						</tr>

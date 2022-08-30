@@ -18,8 +18,8 @@
 <body>
 	<%@ include file="/WEB-INF/navbar.jsp"%>
 
-	<div class="addnewpl">
-		<a href="/playlists/new">Add a new playlist</a>
+	<div class="addnewpl2">
+		<a class="addnewpl" href="/playlists/new">+Add a new playlist</a>
 	</div>
 
 
@@ -37,7 +37,7 @@
 						<a class="lll" href="/playlist/${playlist.id}"> 
 						<c:out	value="${playlist.name}"></c:out></a>
 						
-						<a href="/deletePlaylist/${playlist.id }">DELETE</a>
+						<a class="delete" href="/deletePlaylist/${playlist.id }">DELETE</a>
 					</li>
 				</c:forEach>
 
