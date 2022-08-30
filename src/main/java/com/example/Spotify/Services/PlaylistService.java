@@ -66,21 +66,22 @@ public class PlaylistService {
 
 		if (foundList.getSongs().contains(foundSong)) {
 			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(playlistId, songId);
-			
-			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded() + 1);
-			
-			play_songRepo.save(playlist_song);
+			System.out.println("before" + playlist_song.getNumOfTimesAdded());
 
+			playlist_song.setNumOfTimesAdded(playlist_song.getNumOfTimesAdded() + 1);
+			System.out.println("after" + playlist_song.getNumOfTimesAdded());
+
+			play_songRepo.save(playlist_song);
 
 		} else {
 			foundList.getSongs().add(foundSong);
 
 			playlistRepo.save(foundList);
+
 			Long p = (long) 3;
 			Long s = (long) 2;
-			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(p,s);
+			Playlist_song playlist_song = play_songRepo.findAllByPlaylist_idAndSong_id(p, s);
 			System.out.println(playlist_song.getNumOfTimesAdded());
-			playlistRepo.save(foundList);
 
 		}
 
@@ -93,7 +94,5 @@ public class PlaylistService {
 			playlistRepo.deleteById(id);
 		}
 	}
-
-	
 
 }

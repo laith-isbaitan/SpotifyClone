@@ -92,8 +92,9 @@
 							</select>
 						</div>
 
-						<c:out value="${song[3]}"></c:out>
-						Add(s)<br> <input type="hidden" name="songId"
+						<p><c:out value="${song[3]}"></c:out>
+						Add(s)</p>
+						<br> <input type="hidden" name="songId"
 							value="${song[0]}" /> <input class="addBtn" type="submit"
 							value="ADD" />
 					</div>

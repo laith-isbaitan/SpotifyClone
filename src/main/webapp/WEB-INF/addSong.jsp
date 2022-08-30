@@ -6,42 +6,49 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 
-<title>Insert title here</title>
-
-<link rel="stylesheet" type="text/css" href="/css/addSong.css">
+<link rel="stylesheet" type="text/css" href="/css/addPlaylist.css">
 
 </head>
+
 <body>
+	<%@ include file="/WEB-INF/navbar.jsp"%>
 
-	<div class="AllContainer">
+	<div class="login-wrap">
+		<div class="login-html">
+			<form:form action="/songs/new" method="post"
+				modelAttribute="addSongForm">
+				<h1>Add a New Song</h1>
 
-		<%@ include file="/WEB-INF/navbar.jsp"%>
 
+				<div class="login-form">
+					<div class="group">
 
-		<center>
-			<div class="formContainer">
-				<form:form action="/songs/new" method="post"
-					modelAttribute="addSongForm">
-					<legend>Add a song:</legend>
-					<p>
-						<form:errors path="title"></form:errors>
-						<form:label path="title">Song Title: </form:label>
-						<form:input type="text" path="title" />
-					</p>
-					<p>
-						<form:errors path="artist"></form:errors>
-						<form:label path="artist">Artist Name: </form:label>
-						<form:input type="text" path="artist" />
-					</p>
-					<input type="submit" value="Add Song" />
-				</form:form>
-			</div>
-		</center>
+						<form:errors class="error" path="title"></form:errors>
+						<form:label path="title" for="user" class="label">Title</form:label>
+						<form:input path="title" id="user" type="text" class="input" />
+					</div>
 
-	</div>
+					<div class="group">
+
+						<form:errors class="error" path="artist"></form:errors>
+						<form:label path="artist" for="user" class="label">Artist Name</form:label>
+						<form:input path="artist" id="user" type="text" class="input" />
+					</div>
+
+					<div class="group">
+						<input type="submit" class="button" value="Add Song" />
+					</div>
+			</form:form>
+
+		</div>
 </body>
+
 </html>

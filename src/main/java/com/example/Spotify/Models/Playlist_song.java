@@ -21,7 +21,7 @@ public class Playlist_song {
 	private Long id;
 
 //    @Column(columnDefinition = "integer default 0")
-	private Integer NumOfTimesAdded ;
+	private int NumOfTimesAdded;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "song_id")
@@ -42,11 +42,11 @@ public class Playlist_song {
 		this.id = id;
 	}
 
-	public Integer getNumOfTimesAdded() {
+	public int getNumOfTimesAdded() {
 		return NumOfTimesAdded;
 	}
 
-	public void setNumOfTimesAdded(Integer numOfTimesAdded) {
+	public void setNumOfTimesAdded(int numOfTimesAdded) {
 		NumOfTimesAdded = numOfTimesAdded;
 	}
 

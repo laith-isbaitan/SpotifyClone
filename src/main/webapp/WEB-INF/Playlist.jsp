@@ -4,43 +4,42 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page isErrorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
-	crossorigin="anonymous">
-<title>Playlist</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" type="text/css" href="/css/SongPage.css">
+
 </head>
-<link rel="stylesheet" type="text/css" href="/css/playlist.css">
 
 <body>
-
 	<%@ include file="/WEB-INF/navbar.jsp"%>
 
-	<center>
-		<div class="AddPlaylist">
-
-			<h2 class="title1">Playlists</h2>
-			<p>
-				<a href="/playlists/new">Add a new playlist</a>
-		</div>
-	</center>
-
-	<div class="d-grid gap-3">
-
-		<p class="tabb">Playlists</p>
-		<c:forEach var="playlist" items="${playlists}">
-
-			<div class="p-2 bg-light border">
-				<a href="/playlist/${playlist.id}"><c:out
-						value="${playlist.name}"></c:out></a>
-						
-			</div>
-
-		</c:forEach>
-
+	<div class="addnewpl">
+		<a href="/playlists/new">Add a new playlist</a>
 	</div>
+
+	<div class="background"></div>
+	<section>
+
+		<div class="album-details">
+			<h1>Your Playlists</h1>
+		</div>
+	</div>
+	<div class="album-tracks">
+		<ol>
+			<c:forEach var="playlist" items="${playlists}">
+				<li><a class="lll" href="/playlist/${playlist.id}"> <c:out
+							value="${playlist.name}"></c:out>
+				</a></li>
+			</c:forEach>
+
+		</ol>
+	</div>
+	</section>
 </body>
+
 </html>

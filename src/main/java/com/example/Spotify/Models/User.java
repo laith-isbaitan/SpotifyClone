@@ -29,16 +29,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3, max = 30, message = "first Name must be at least 3 characters!")
 	private String firstName;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3, max = 30, message = "Last Name must be at least 3 characters!")
 	private String lastName;
 
-	@Size(min = 5)
+	@Size(min = 5, message = "Invalid email!")
 	private String email;
 
-	@Size(min = 5)
+	@Size(min = 5, message = "Password must be at least 5 characters!")
 	private String password;
 
 	@Transient
@@ -53,18 +53,14 @@ public class User {
 	}
 
 	private Date lastLogin;
-    
+
 	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "users_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List <Role> roles = new ArrayList<Role>();
-    
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roles = new ArrayList<Role>();
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Playlist> playlist = new ArrayList<Playlist>();
-	
 
 	public User() {
 	}
@@ -100,7 +96,6 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getPassword() {
 		return password;
@@ -149,6 +144,5 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
 
 }
