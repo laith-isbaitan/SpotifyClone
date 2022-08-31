@@ -53,10 +53,10 @@
 
 						<tr class="lll">
              
-              	<td class="lll"><a href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
+              	<td class="lll"><a class="lll" href="/songs/${item[0] }"><c:out value="${item[1]}"></c:out></a></td>
 								<td class="lll"><c:out value="${item[2]}"></c:out></td>
 								<td class="lll"><c:out value="${item[3]}"></c:out></td>
-								<td class="lll"><a href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
+								<td class="lll"><a class="lll" href="/removeSong/${item[0]}/${currPlaylist.id}">REMOVE</a></td>
 
 
 						</tr>

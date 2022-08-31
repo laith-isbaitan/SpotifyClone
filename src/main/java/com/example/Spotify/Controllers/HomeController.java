@@ -152,57 +152,57 @@ public class HomeController {
 		} else {
 			songService.createSong(song);
 			
-			file = null;
+//			file = null;
 			System.out.println(file);
 
 			///////////////uplode img/////////////////////////
-			if(!file.isEmpty()) {
-				OutputStream out = null;
-			    InputStream filecontent = null;
-			    final PrintWriter writer = response.getWriter();
-			    String path = "C:\\Users\\li1\\Downloads";
-			    final Part filePart = request.getPart("file");
-			    final String fileName = getFileName(filePart);
-			    
-			    String newPath= "C:\\Users\\li1\\Downloads";
-			    try {
-
-			        out = new FileOutputStream(new File(newPath + File.separator
-			                + fileName));
-			        
-			        filecontent = filePart.getInputStream();
-
-			        int read = 0;
-			        final byte[] bytes = new byte[1024];
-
-			        while ((read = filecontent.read(bytes)) != -1) {
-			            out.write(bytes, 0, read);
-			        }
-
-			        song.setImageData(newPath+File.separator+fileName);
-			        songService.updateSong(song);
-			        
-			        System.out.println("hiiiiiiiii");
-//			        writer.println("New file " + fileName + " created at " + newPath);
-
-			    } catch (IOException fne) {
-			        writer.println("You either did not specify a file to upload or are "
-			                + "trying to upload a file to a protected or nonexistent "
-			                + "location.");
-			        writer.println("<br/> ERROR: " + fne.getMessage());
-
-			    } finally {
-			        if (out != null) {
-			            out.close();
-			        }
-			        if (filecontent != null) {
-			            filecontent.close();
-			        }
-			        if (writer != null) {
-			            writer.close();
-			        }
-			    }
-			}
+//			if(!file.isEmpty()) {
+//				OutputStream out = null;
+//			    InputStream filecontent = null;
+//			    final PrintWriter writer = response.getWriter();
+//			    String path = "C:\\Users\\li1\\Downloads";
+//			    final Part filePart = request.getPart("file");
+//			    final String fileName = getFileName(filePart);
+//			    
+//			    String newPath= "C:\\Users\\li1\\Downloads";
+//			    try {
+//
+//			        out = new FileOutputStream(new File(newPath + File.separator
+//			                + fileName));
+//			        
+//			        filecontent = filePart.getInputStream();
+//
+//			        int read = 0;
+//			        final byte[] bytes = new byte[1024];
+//
+//			        while ((read = filecontent.read(bytes)) != -1) {
+//			            out.write(bytes, 0, read);
+//			        }
+//
+//			        song.setImageData(newPath+File.separator+fileName);
+//			        songService.updateSong(song);
+//			        
+//			        System.out.println("hiiiiiiiii");
+////			        writer.println("New file " + fileName + " created at " + newPath);
+//
+//			    } catch (IOException fne) {
+//			        writer.println("You either did not specify a file to upload or are "
+//			                + "trying to upload a file to a protected or nonexistent "
+//			                + "location.");
+//			        writer.println("<br/> ERROR: " + fne.getMessage());
+//
+//			    } finally {
+//			        if (out != null) {
+//			            out.close();
+//			        }
+//			        if (filecontent != null) {
+//			            filecontent.close();
+//			        }
+//			        if (writer != null) {
+//			            writer.close();
+//			        }
+//			    }
+//			}
 			System.out.println("helooooo");
 		    //////////////////////////
 			return "redirect:/";
